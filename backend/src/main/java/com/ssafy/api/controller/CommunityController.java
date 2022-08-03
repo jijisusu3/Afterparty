@@ -22,7 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "커뮤니티 API", tags = {"Community"})
 @RestController
-@RequestMapping("/api/communitys")
+@RequestMapping("/api/communitis")
 public class CommunityController {
 
     @Autowired
