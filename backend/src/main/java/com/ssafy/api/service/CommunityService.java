@@ -13,4 +13,6 @@ public interface CommunityService {
     List<CommunityRes> getArticleListByGenre(int genre, int category);
 
     List<CommunityRes> getAllArticleList();
+
+    Community getArticleByArticleId(long article_id);
 }

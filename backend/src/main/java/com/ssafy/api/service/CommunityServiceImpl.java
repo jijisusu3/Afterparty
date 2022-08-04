@@ -5,6 +5,8 @@ import com.ssafy.api.response.CommunityRes;
 import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.repository.CommentRepository;
+import com.ssafy.db.repository.CommentRepositorySupport;
 import com.ssafy.db.repository.CommunityRepository;
 import com.ssafy.db.repository.CommunityRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,10 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Autowired
     CommunityRepositorySupport communityRepositorySupport;
+
+    @Autowired
+    CommentRepositorySupport commentRepositorySupport;
+
 
     @Override
     public Community createArticle(User userInfo, CommunityRegistPostReq communityRegisterInfo) {
@@ -41,7 +47,8 @@ public class CommunityServiceImpl implements CommunityService{
             res.add(CommunityRes.of(commu.getArticle_title(),
                     commu.getUser().getUserId(),
                     commu.getView_cnt(),
-                    commu.getRecommend()));
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentByArticleId(commu.getArticle_id())));
         }
         return res;
     }
@@ -52,11 +59,19 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findAllCommunityList();
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu: communityList){
-            res.add(CommunityRes.of(commu.getArticle_title(),
+            res.add(CommunityRes.of(
+                    commu.getArticle_title(),
                     commu.getUser().getUserId(),
                     commu.getView_cnt(),
-                    commu.getRecommend()));
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentByArticleId(commu.getArticle_id())));
         }
+        return res;
+    }
+
+    @Override
+    public Community getArticleByArticleId(long article_id) {
+        Community res = communityRepositorySupport.findArticleByArticleId(article_id);
         return res;
     }
     //차송희 커뮤니티 끝-------------------------------------------

@@ -7,6 +7,7 @@ import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
@@ -55,7 +56,7 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    //------------차송희 끝---------------------------------
+
     @GetMapping("/all")
     @ApiOperation(value = "전체 게시글 목록 조회", notes = "전체 게시글 목록을 조회한다.")
     public ResponseEntity<List<CommunityRes>> getAllArticleList(){
@@ -71,4 +72,18 @@ public class CommunityController {
         List<CommunityRes> res = communityService.getArticleListByGenre(genre,category);
         return ResponseEntity.status(200).body(res);
     }
+
+    @GetMapping("/{article_id}")
+    @ApiOperation(value = "게시글 상세보기", notes="게시글 상세조회를 실행한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = " 사용 가능"),
+            @ApiResponse(code = 401, message = ""),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Community> getArticleDetails(@PathVariable long article_id){
+        Community community = communityService.getArticleByArticleId(article_id);
+
+        return ResponseEntity.status(200).body(community);
+    }
+    //------------차송희 끝---------------------------------
 }
