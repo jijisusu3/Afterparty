@@ -25,7 +25,7 @@
             <p>Error Message</p>
           </div>
           <div class="form-validation">
-            <input v-model="passwordCheck" type="password" class="modal-input" id="password-confirm" name="password" placeholder="Confirm your password">
+            <input v-model="passwordCheck" @keyup="pwCheck" type="password" class="modal-input" id="password-confirm" name="password" placeholder="Confirm your password">
             <p>Error Message</p>
           </div>
           <input type="submit" class="modal-input-btn" value="Sign up">
@@ -58,6 +58,14 @@ export default defineComponent ({
   },
   setup() {
     const signup = useAccounts()
+    const pwCheck = function passwordCheck() {
+      if (this.password === this.passwordCheck) {
+        console.log('일치합니다')
+      } else {
+        console.log('일치하지 않습니다')
+      }
+    }
+
     // const form = document.getElementById('form')
     // function showError(input, message) {
     //   const formValidation = input.parentElement
@@ -109,7 +117,8 @@ export default defineComponent ({
     //     signup.signup({userId, email, name, password})
     // }
     return{
-      signup
+      signup,
+      pwCheck,
     }
   }
 })
