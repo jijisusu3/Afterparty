@@ -15,4 +15,6 @@ public interface CommunityService {
     List<CommunityRes> getAllArticleList();
 
     Community getArticleByArticleId(long article_id);
+
+    void updateArticle(long article_id, CommunityRegistPostReq articleInfo);
 }

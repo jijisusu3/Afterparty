@@ -74,5 +74,13 @@ public class CommunityServiceImpl implements CommunityService{
         Community res = communityRepositorySupport.findArticleByArticleId(article_id);
         return res;
     }
+
+    @Override
+    public void updateArticle(long article_id, CommunityRegistPostReq articleInfo) {
+        Community updateArticle = communityRepositorySupport.findArticleByArticleId(article_id);
+        updateArticle.setArticle_title(articleInfo.getAlticle_title());
+        updateArticle.setArticle_content(articleInfo.getAlticle_content());
+        communityRepository.save(updateArticle);
+    }
     //차송희 커뮤니티 끝-------------------------------------------
 }

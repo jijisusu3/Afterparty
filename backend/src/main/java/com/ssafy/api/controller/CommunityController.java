@@ -85,5 +85,22 @@ public class CommunityController {
 
         return ResponseEntity.status(200).body(community);
     }
+
+    @PatchMapping("/{article_id}")
+    @ApiOperation(value = "게시글 상세 수정", notes="게시글 상세를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = " 사용 가능"),
+            @ApiResponse(code = 401, message = ""),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateArticleDetails(
+            @PathVariable long article_id,
+            @RequestBody @ApiParam(value = "글 내용") CommunityRegistPostReq articleInfo){
+        communityService.updateArticle(article_id, articleInfo);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+
     //------------차송희 끝---------------------------------
 }
