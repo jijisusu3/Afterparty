@@ -1,6 +1,9 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.CommunityRegistPostReq;
+import com.ssafy.api.request.UserInfoFetchReq;
+import com.ssafy.api.response.CommunityRes;
+import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -10,11 +13,10 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * 커뮤니치 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -22,7 +24,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "커뮤니티 API", tags = {"Community"})
 @RestController
-@RequestMapping("/api/communitis")
+@RequestMapping("/api/communities")
 public class CommunityController {
 
     @Autowired
@@ -53,4 +55,20 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+    //------------차송희 끝---------------------------------
+    @GetMapping("/all")
+    @ApiOperation(value = "전체 게시글 목록 조회", notes = "전체 게시글 목록을 조회한다.")
+    public ResponseEntity<List<CommunityRes>> getAllArticleList(){
+        List<CommunityRes> res = communityService.getAllArticleList();
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @GetMapping("")
+    @ApiOperation(value = "장르/카테고리별 게시글 목록 조회", notes = "장르/카테고리별 게시글 목록을 조회한다.")
+    public ResponseEntity<List<CommunityRes>> getArticleList(
+            @RequestParam @ApiParam(required = true) int genre,
+            @RequestParam @ApiParam(required = true) int category) {
+        List<CommunityRes> res = communityService.getArticleListByGenre(genre,category);
+        return ResponseEntity.status(200).body(res);
+    }
 }

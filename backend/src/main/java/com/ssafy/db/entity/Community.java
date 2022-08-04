@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 커뮤니티 모델 정의.
  */
 
-@Entity(name="community")
+@Entity
 @Getter
 @Setter
 public class Community {
