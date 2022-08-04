@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.CommunityRegistPostReq;
 import com.ssafy.api.response.CommunityRes;
+import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
 
@@ -19,4 +20,6 @@ public interface CommunityService {
     void updateArticle(long article_id, CommunityRegistPostReq articleInfo);
 
     void deleteAlticle(long article_id);
+
+    Comment createComment(User user, String comment, Community community) ;
 }

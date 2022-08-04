@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.CommunityRegistPostReq;
 import com.ssafy.api.response.CommunityRes;
 import com.ssafy.api.response.FollowingRes;
+import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CommentRepository;
@@ -23,6 +24,9 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Autowired
     CommunityRepositorySupport communityRepositorySupport;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Autowired
     CommentRepositorySupport commentRepositorySupport;
@@ -71,7 +75,9 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Override
     public Community getArticleByArticleId(long article_id) {
+        System.out.println("article_id : "+article_id);
         Community res = communityRepositorySupport.findArticleByArticleId(article_id);
+        System.out.println("res : "+res);
         return res;
     }
 
@@ -87,6 +93,16 @@ public class CommunityServiceImpl implements CommunityService{
     public void deleteAlticle(long article_id) {
         Community deleteArticle = communityRepositorySupport.findArticleByArticleId(article_id);
         communityRepository.deleteById(deleteArticle.getArticle_id());
+    }
+    //----------------------댓글 CRUD-------------------------------------------------------
+    @Override
+    public Comment createComment(User user, String comment, Community community) {
+        System.out.println("-------------: "+community);
+        Comment comments = new Comment();
+        comments.setComment_content(comment);
+        comments.setUser(user);
+        comments.setCommunity(community);
+        return commentRepository.save(comments);
     }
     //차송희 커뮤니티 끝-------------------------------------------
 }

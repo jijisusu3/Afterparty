@@ -36,6 +36,7 @@ public class CommunityRepositorySupport{
     }
 
     public Community findArticleByArticleId(long article_id) {
+        System.out.println(article_id);
         Community res = jpaQueryFactory.select(qCommunity).from(qCommunity)
                 .where(qCommunity.article_id.eq(article_id)).fetchOne();
         if(res==null) return null;
