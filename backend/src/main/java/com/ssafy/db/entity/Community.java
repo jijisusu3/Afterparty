@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 커뮤니티 모델 정의.
@@ -44,4 +46,7 @@ public class Community {
     @ManyToOne
     @JoinColumn(name="fk_user_user_serial", referencedColumnName = "userSerial", unique = true)
     private User user;
+
+    @OneToMany(mappedBy = "community", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Set<Comment> comments = new HashSet<>();
 }

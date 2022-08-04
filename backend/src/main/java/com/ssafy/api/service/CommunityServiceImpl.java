@@ -82,5 +82,11 @@ public class CommunityServiceImpl implements CommunityService{
         updateArticle.setArticle_content(articleInfo.getAlticle_content());
         communityRepository.save(updateArticle);
     }
+
+    @Override
+    public void deleteAlticle(long article_id) {
+        Community deleteArticle = communityRepositorySupport.findArticleByArticleId(article_id);
+        communityRepository.deleteById(deleteArticle.getArticle_id());
+    }
     //차송희 커뮤니티 끝-------------------------------------------
 }

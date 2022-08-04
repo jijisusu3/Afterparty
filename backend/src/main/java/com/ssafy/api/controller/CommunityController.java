@@ -101,6 +101,21 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+    @DeleteMapping("/{article_id}")
+    @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제 후 응답한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "게시글 삭제 성공"),
+            @ApiResponse(code = 401, message = "게시글 삭제 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteAlticle(
+            @PathVariable("article_id") long article_id
+    ) {
+
+        communityService.deleteAlticle(article_id);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
+    }
 
     //------------차송희 끝---------------------------------
 }

@@ -17,4 +17,6 @@ public interface CommunityService {
     Community getArticleByArticleId(long article_id);
 
     void updateArticle(long article_id, CommunityRegistPostReq articleInfo);
+
+    void deleteAlticle(long article_id);
 }
