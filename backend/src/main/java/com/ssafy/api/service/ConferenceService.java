@@ -19,4 +19,6 @@ public interface ConferenceService {
     List<ConferenceRes> getConferenceAllList();
 
     List<ConferenceRes> searchConference(ConferenceGetReq searchInfo);
+
+    List<ConferenceRes> searchConferenceNoKeyword(ConferenceGetReq searchInfo);
 }

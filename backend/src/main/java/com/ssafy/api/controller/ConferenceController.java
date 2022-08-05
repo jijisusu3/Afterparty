@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,8 +42,14 @@ public class ConferenceController {
     @ApiOperation(value = "화상회의 검색", notes = "선택된 조건에 대한 화상회의 목록을 가져온다. ")
     public ResponseEntity<List<ConferenceRes>> searchConference(
             @RequestBody @ApiParam(value = "검색 정보", required = true) ConferenceGetReq searchInfo) {
+        List<ConferenceRes> res = new ArrayList<>();
 
-        List<ConferenceRes> res = conferenceService.searchConference(searchInfo);
+        if(searchInfo.getKeyword() != null) { // keyword o
+            res = conferenceService.searchConference(searchInfo);
+        } else if(searchInfo.getKeyword() == null) { //keyword x
+            res = conferenceService.searchConferenceNoKeyword(searchInfo);
+        }
+
 
         return ResponseEntity.status(200).body(res);
     }

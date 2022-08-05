@@ -36,13 +36,21 @@ public class ConferenceServiceImpl implements ConferenceService{
 
     @Override
     public List<ConferenceRes> searchConference(ConferenceGetReq searchInfo) {
-        List<Conference> conferenceList = new ArrayList<>();
+        List<Conference> conferenceList = conferenceRepositorySupport.findByKeywordContaining(searchInfo);
 
-        if(searchInfo.getType() == 0){ //공연 제목으로 검색
-            conferenceList = conferenceRepositorySupport.findByPrfnmContaining(searchInfo);
-        }else if(searchInfo.getType() == 1){ //방 제목으로 검색
-            conferenceList = conferenceRepositorySupport.findByTitleContaining(searchInfo);
+        List<ConferenceRes> res = new ArrayList<>();
+
+        for (Conference conference : conferenceList) {
+            //db에서 불러온 conference 정보에서 필요한 정보만 conferenceRes에 담아 목록 만들어주기
+            res.add(ConferenceRes.of(conference));
         }
+
+        return res;
+    }
+
+    @Override
+    public List<ConferenceRes> searchConferenceNoKeyword(ConferenceGetReq searchInfo) {
+        List<Conference> conferenceList = conferenceRepositorySupport.findBySidoSigungu(searchInfo);
 
         List<ConferenceRes> res = new ArrayList<>();
 
