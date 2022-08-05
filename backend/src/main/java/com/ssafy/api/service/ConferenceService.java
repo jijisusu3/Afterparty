@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 
+import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.PerformGetReq;
 import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.api.response.PerformInfoRes;
@@ -16,4 +17,6 @@ import java.util.List;
 public interface ConferenceService {
 
     List<ConferenceRes> getConferenceAllList();
+
+    List<ConferenceRes> searchConference(ConferenceGetReq searchInfo);
 }

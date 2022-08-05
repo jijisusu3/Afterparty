@@ -1,8 +1,10 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.repository.ConferenceRepository;
+import com.ssafy.db.repository.ConferenceRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class ConferenceServiceImpl implements ConferenceService{
 
     @Autowired
     ConferenceRepository conferenceRepository;
+
+    @Autowired
+    ConferenceRepositorySupport conferenceRepositorySupport;
 
     @Override
     public List<ConferenceRes> getConferenceAllList() {
@@ -28,4 +33,25 @@ public class ConferenceServiceImpl implements ConferenceService{
 
         return res;
     }
+
+    @Override
+    public List<ConferenceRes> searchConference(ConferenceGetReq searchInfo) {
+        List<Conference> conferenceList = new ArrayList<>();
+
+        if(searchInfo.getType() == 0){ //공연 제목으로 검색
+            conferenceList = conferenceRepositorySupport.findByPrfnmContaining(searchInfo);
+        }else if(searchInfo.getType() == 1){ //방 제목으로 검색
+            conferenceList = conferenceRepositorySupport.findByTitleContaining(searchInfo);
+        }
+
+        List<ConferenceRes> res = new ArrayList<>();
+
+        for (Conference conference : conferenceList) {
+            //db에서 불러온 conference 정보에서 필요한 정보만 conferenceRes에 담아 목록 만들어주기
+            res.add(ConferenceRes.of(conference));
+        }
+
+        return res;
+    }
+
 }
