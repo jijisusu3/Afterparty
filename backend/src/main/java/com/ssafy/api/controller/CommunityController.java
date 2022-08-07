@@ -64,12 +64,12 @@ public class CommunityController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @GetMapping("")
+    @GetMapping("/{article_genre}/{article_category}")
     @ApiOperation(value = "장르/카테고리별 게시글 목록 조회", notes = "장르/카테고리별 게시글 목록을 조회한다.")
     public ResponseEntity<List<CommunityRes>> getArticleList(
-            @RequestParam @ApiParam(required = true) int genre,
-            @RequestParam @ApiParam(required = true) int category) {
-        List<CommunityRes> res = communityService.getArticleListByGenre(genre,category);
+            @PathVariable int article_genre,
+            @PathVariable int article_category) {
+        List<CommunityRes> res = communityService.getArticleListByGenre(article_genre,article_category);
         return ResponseEntity.status(200).body(res);
     }
 
@@ -157,7 +157,6 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-
     //------------------댓글 CRUD---------------------------------------------------------
     @PostMapping("/{article_id}/comments")
     @ApiOperation(value = "댓글 작성", notes = "댓글 작성")
@@ -170,7 +169,7 @@ public class CommunityController {
     public ResponseEntity<? extends BaseResponseBody> commentRegister(
             @RequestParam @ApiParam(value = "댓글 정보", required = true) String comment
             ,@ApiIgnore Authentication authentication
-            ,@PathVariable("article_id") long article_id) {
+            ,@PathVariable long article_id) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
