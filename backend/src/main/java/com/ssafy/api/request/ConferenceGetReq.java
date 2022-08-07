@@ -31,5 +31,8 @@ public class ConferenceGetReq {
     @ApiModelProperty(name="시/군/구", example = "중구")
     String sigungu;
 
+    //  default:ALL / 공통
+    @ApiModelProperty(name="장르코드", example = "AAAB")
+    String genrenm;
 
 }

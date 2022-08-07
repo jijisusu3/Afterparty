@@ -50,16 +50,6 @@ public class ConferenceController {
             res = conferenceService.searchConferenceNoKeyword(searchInfo);
         }
 
-
-        return ResponseEntity.status(200).body(res);
-    }
-
-    @GetMapping("/{genrenm}")
-    @ApiOperation(value = "화상회의 장르 검색", notes = "장르 선택에 대한 화상회의 목록을 가져온다. ")
-    public ResponseEntity<List<ConferenceRes>> searchGenrenmConference(
-            @RequestBody @ApiParam(value = "검색 정보", required = true) ConferenceGetReq searchInfo) {
-        List<ConferenceRes> res = new ArrayList<>();
-
         return ResponseEntity.status(200).body(res);
     }
 }

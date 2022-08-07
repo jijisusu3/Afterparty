@@ -23,7 +23,9 @@ public class ConferenceRepositorySupport {
                 .where(
                         sidoEq(searchInfo.getSido()),
                         sigunguEq(searchInfo.getSigungu()),
-                        afterEq(searchInfo.getIs_after()))
+                        afterEq(searchInfo.getIs_after()),
+                        genrenmEq(searchInfo.getGenrenm())
+                )
                 .fetch();
 
         if(conferences == null) {
@@ -39,8 +41,9 @@ public class ConferenceRepositorySupport {
                 .where(
                         sidoEq(searchInfo.getSido()),
                         sigunguEq(searchInfo.getSigungu()),
-                        keywordEq(searchInfo.getType(), searchInfo.getKeyword()),
-                        afterEq(searchInfo.getIs_after())
+                        afterEq(searchInfo.getIs_after()),
+                        genrenmEq(searchInfo.getGenrenm()),
+                        keywordEq(searchInfo.getType(), searchInfo.getKeyword())
                 )
                 .fetch();
 
@@ -69,6 +72,15 @@ public class ConferenceRepositorySupport {
         return null;
     }
 
+    private BooleanExpression genrenmEq(String genrenm) {
+        if(genrenm.equals("ALL")){
+            System.out.println("전체지롱");
+            return null;
+        } else {
+            return qConference.genrenm.eq(genrenm);
+        }
+    }
+
     private BooleanExpression sigunguEq(String sigungu) {
         return StringUtils.hasText(sigungu) ? qConference.sigungu.eq(sigungu) : null ;
     }
@@ -76,6 +88,4 @@ public class ConferenceRepositorySupport {
     private BooleanExpression sidoEq(String sido) {
         return StringUtils.hasText(sido) ? qConference.sido.eq(sido) : null ;
     }
-
-
 }
