@@ -117,6 +117,47 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
     }
+
+    @PostMapping("/{article_id}/like")
+    @ApiOperation(value = "게시글 좋아요", notes = "게시글 좋아요")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> recommendAlticle(
+            @PathVariable("article_id") long article_id
+            ,@ApiIgnore Authentication authentication) {
+        /**
+         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
+         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
+         */
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        User user = userDetails.getUser();
+        Community community = communityService.getArticleByArticleId(article_id);
+        communityService.recommendArticle(article_id);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PostMapping("/{article_id}/count")
+    @ApiOperation(value = "게시글 조회수", notes = "게시글 조회수 증가")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> articleViewCnt(
+            @PathVariable("article_id") long article_id
+            ,@ApiIgnore Authentication authentication
+    ){
+        Community commu = communityService.getArticleByArticleId(article_id);
+        communityService.updateViewCnt(article_id,commu);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+
     //------------------댓글 CRUD---------------------------------------------------------
     @PostMapping("/{article_id}/comments")
     @ApiOperation(value = "댓글 작성", notes = "댓글 작성")
