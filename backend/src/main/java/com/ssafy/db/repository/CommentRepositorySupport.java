@@ -1,6 +1,7 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.QComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,12 @@ public class CommentRepositorySupport {
     public long countCommentByArticleId(long article_id){
         long comments = jpaQueryFactory.select(qComment).from(qComment)
                 .where(qComment.community.article_id.eq(article_id)).fetchCount();
+        return comments;
+    }
+
+    public Comment findCommentByCommentId(long comment_id) {
+        Comment comments = jpaQueryFactory.select(qComment).from(qComment)
+                .where(qComment.comment_id.eq(comment_id)).fetchOne();
         return comments;
     }
 }

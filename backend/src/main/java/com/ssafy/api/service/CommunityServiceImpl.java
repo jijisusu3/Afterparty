@@ -97,12 +97,24 @@ public class CommunityServiceImpl implements CommunityService{
     //----------------------댓글 CRUD-------------------------------------------------------
     @Override
     public Comment createComment(User user, String comment, Community community) {
-        System.out.println("-------------: "+community);
         Comment comments = new Comment();
         comments.setComment_content(comment);
         comments.setUser(user);
         comments.setCommunity(community);
         return commentRepository.save(comments);
+    }
+
+    @Override
+    public Comment updateComment(String comment, long comment_id) {
+        Comment updateComment = commentRepositorySupport.findCommentByCommentId(comment_id);
+        updateComment.setComment_content(comment);
+        return commentRepository.save(updateComment);
+    }
+
+    @Override
+    public void deleteComment(long comment_id) {
+        Comment deleteComment = commentRepositorySupport.findCommentByCommentId(comment_id);
+        commentRepository.deleteById(comment_id);
     }
     //차송희 커뮤니티 끝-------------------------------------------
 }

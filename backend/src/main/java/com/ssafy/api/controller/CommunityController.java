@@ -95,9 +95,10 @@ public class CommunityController {
     })
     public ResponseEntity<? extends BaseResponseBody> updateArticleDetails(
             @PathVariable long article_id,
-            @RequestBody @ApiParam(value = "글 내용") CommunityRegistPostReq articleInfo){
+            @RequestBody @ApiParam(value = "글 내용") CommunityRegistPostReq articleInfo,
+            @ApiIgnore Authentication authentication){
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         communityService.updateArticle(article_id, articleInfo);
-
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -117,7 +118,7 @@ public class CommunityController {
 
     }
     //------------------댓글 CRUD---------------------------------------------------------
-    @PostMapping("/{article_id}/comment")
+    @PostMapping("/{article_id}/comments")
     @ApiOperation(value = "댓글 작성", notes = "댓글 작성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -136,10 +137,37 @@ public class CommunityController {
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
         Community community = communityService.getArticleByArticleId(article_id);
-        System.out.println("게시글 : "+ community);
         Comment comments = communityService.createComment(user, comment, community);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+    @PatchMapping("/{article_id}/comments/{comment_id}")
+    @ApiOperation(value = "댓글 수정", notes="댓글을 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = " 사용 가능"),
+            @ApiResponse(code = 401, message = ""),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateComments(
+            @PathVariable long article_id,
+            @PathVariable long comment_id,
+            @RequestParam @ApiParam(value = "댓글 정보", required = true) String comment,
+            @ApiIgnore Authentication authentication
+    ){
+        Comment comments = communityService.updateComment(comment, comment_id);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+    @DeleteMapping("/{article_id}/comments/{comment_id}")
+    @ApiOperation(value = "댓글 삭제", notes="댓글을 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = " 사용 가능"),
+            @ApiResponse(code = 401, message = ""),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteComments(
+            @PathVariable long comment_id){
+        communityService.deleteComment(comment_id);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
     //------------차송희 끝---------------------------------
 }
