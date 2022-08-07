@@ -6,27 +6,28 @@
       </div>
       <div class="modal-content-right">
         <div  @click="$emit('signupClose')" class="close-btn">&times;</div>
-        <form id="form" @submit.prevent="[signup.signup({userId, email, name, password}), $emit('signupClose'), $emit('showLogin')]" class="modal-form">
+        <!-- <form id="form" @submit.prevent="[signupValid(), $emit('signupClose'), $emit('showLogin')]" class="modal-form"> -->
+        <form id="form" @submit.prevent="signupValid" class="modal-form">
           <h1 class="font-weight-bold">Sign Up!</h1>
           <div class="form-validation">
-            <input v-model="userId" type="text" class="modal-input" name="name" id="name" placeholder="Enter your ID">
-            <p>Error Message</p>
+            <input v-model="userId" @keyup="userIdValid" type="text" class="modal-input" name="userId" id="userId" placeholder="Enter your ID" required>
+            <p class="userId-check">UserId Valid Error</p>
           </div>
           <div class="form-validation">
-            <input v-model="email" type="email" class="modal-input" id="email" name="email" placeholder="Enter your e-mail">
-            <p>Error Message</p>
+            <input v-model="email" @keyup="emailValid" type="email" class="modal-input" id="email" name="email" placeholder="Enter your e-mail">
+            <p class="email-check">Email Valid Error</p>
           </div>
           <div class="form-validation">
-            <input v-model="name" type="text" class="modal-input" id="nickname" name="nickname" placeholder="Enter your nickname">
-            <p>Error Message</p>
+            <input v-model="nickname" @keyup="nicknameValid" type="text" class="modal-input" id="nickname" name="nickname" placeholder="Enter your nickname">
+            <p class="nickname-check">Nickname Valid Error</p>
           </div>
           <div class="form-validation">
-            <input v-model="password" type="password" class="modal-input" id="password" name="password" placeholder="Enter your password">
-            <p>Error Message</p>
+            <input v-model="password" @keyup="pwValid(), pwCheckValid()" type="password" class="modal-input" id="password" name="password" placeholder="Enter your password">
+            <p class="password-check">Password Valid Error</p>
           </div>
           <div class="form-validation">
-            <input v-model="passwordCheck" @keyup="pwCheck" type="password" class="modal-input" id="password-confirm" name="password" placeholder="Confirm your password">
-            <p>Error Message</p>
+            <input v-model="passwordCheck" @keyup="pwCheckValid" type="password" class="modal-input" id="password-confirm" name="password" placeholder="Confirm your password">
+            <p class="passwordCheck-check">Password-Check Valid Error</p>
           </div>
           <input type="submit" class="modal-input-btn" value="Sign up">
           <div @click="[$emit('showLogin'), $emit('signupClose')]" style="border: none; cursor: pointer;" class="my-2">Login</div>
@@ -40,6 +41,8 @@
 // import $ from 'jquery'
 import { defineComponent } from "vue";
 import { useAccounts } from "@/stores/accounts";
+import secosi from "@/api/secosi";
+import axios from "axios";
 // import { ref, computed } from "vue";
 
 export default defineComponent ({
@@ -49,82 +52,161 @@ export default defineComponent ({
       errors:[],
       userId: '',
       email: '',
-      name: '',
+      nickname: '',
       password: '',
       passwordCheck: '',
+      signupPermission: false,
     }
   },
   computed: {
   },
   setup() {
-    const signup = useAccounts()
-    const pwCheck = function passwordCheck() {
-      if (this.password === this.passwordCheck) {
-        console.log('일치합니다')
-      } else {
-        console.log('일치하지 않습니다')
+    const signupValid = function signupValid() {
+      const signup = useAccounts()
+      const valueCheck = this.userId.length * this.email.length * this.nickname.length * this.password.length
+      if (valueCheck > 0 && this.signupPermission) {
+        const credential = {
+          "email": this.email,
+          "name": this.nickname,
+          "password": this.password,
+          "userId": this.userId
+        }
+        signup.signup(credential)
+        this.email = ''
+        this.nickname = ''
+        this.password = ''
+        this.userId = ''
+        this.passwordCheck = ''
+        this.$emit('signupClose')
+        this.$emit('showLogin')
       }
     }
 
-    // const form = document.getElementById('form')
-    // function showError(input, message) {
-    //   const formValidation = input.parentElement
-    //   formValidation.className = 'form-validation error'
-    //   const errorMessage = formValidation.querySelector('p')
-    //   errorMessage.innerText = message;
-    // }
-    // function showValid(input){
-    //   const formValidation = input.parentElement
-    //   formValidation.className = 'form-validation valid'
-    // }
-    // function checkRequired(inputArr) {
-    //   inputArr.forEach(function(input){
-    //     if (input.value.trim()===''){
-    //       showError(input, `${getFieldName(input)} 이 필요합니다.`)
-    //     }else {
-    //       showValid(input)
-    //     }
-    //   })
-    // }
-    // function checkLength(input, min, max) {
-    //   if (input.value.length < min){
-    //     showError(input, `${getFieldName(input)} 은 최소 ${min}자여야 합니다.`)
-    //   }else if (input.value.length > max) {
-    //     showError(input, `${getFieldName(input)} 은 최대 ${max}자여야 입니다.`)
-    //   }else{
-    //     showValid(input)
-    //   }
-    // }
-    // function passwordMatch(input1, input2){
-    //   if (input1.value != input2.value){
-    //     showError(input2, '비밀번호가 일치하지 않습니다.')
-    //   }
-    // }
-    // function getFieldName(input){
-    //   return input.name.charAt(0).toUpperCase() + input.name.slice(1)
-    // }
-    // function beforeSubmit() {
-    //     const name = document.getElementById('name')
-    //     const email = document.getElementById('email')
-    //     const nickname = document.getElementById('nickname')
-    //     const password = document.getElementById('password')
-    //     const passwordConfirm = document.getElementById('password-comfirm')
-    //     checkRequired(name, email, nickname, password, passwordConfirm)
-    //     checkLength(name, 3, 30)
-    //     checkLength(password, 8, 25)
-    //     checkLength(passwordCheck, 8, 25)
-    //     passwordMatch(password, passwordConfirm)
-    //     signup.signup({userId, email, name, password})
-    // }
+    const userIdValid = function userIdValid() {
+      const userId = document.querySelector('.userId-check')
+      if (this.userId.length < 3 || this.userId.length > 30) {
+        userId.style.display = 'block'
+        userId.innerText = '아이디는 3~30 글자여야 합니다'
+      } else {
+        axios.get(secosi.accounts.userIdCheck() + '/' + this.userId)
+          .then(res => {
+            if (res.data.message) {
+              userId.style.display = 'none'
+              this.signupPermission ||= true
+            }
+          })
+          .catch(err => {
+            this.signupPermission &&= false
+            if (err.response.data.statusCode === 409) {
+              userId.style.display = 'block'
+              userId.innerText = '중복되는 아이디입니다'
+            } else {
+              userId.style.display = 'block'
+              userId.innerText = 'Invalid userId'
+            }
+          })
+      }
+    }
+    const emailValid = function emailValid() {
+      const email = document.querySelector('.email-check')
+      if (this.email.length < 1) {
+        email.style.display = 'block'
+        email.innerText = '이메일을 입력해주세요'
+        this.signupPermission &&= false
+      } else {
+        axios.get(secosi.accounts.emailCheck() + '/' + this.email)
+          .then(res => {
+            if (res.data.message) {
+              email.style.display = 'none'
+              this.signupPermission ||= true
+            }
+          })
+          .catch(err => {
+            this.signupPermission &&= false
+            if (err.response.data.statusCode === 409) {
+              email.style.display = 'block'
+              email.innerText = '중복되는 이메일입니다'
+            } else {
+              email.style.display = 'block'
+              email.innerText = 'Invalid email'
+            }
+          })
+      }
+    }
+    const nicknameValid = function nicknameValid() {
+      const nickname = document.querySelector('.nickname-check')
+      if (this.nickname.length < 3 || this.nickname.length > 20) {
+        nickname.style.display = 'block'
+        nickname.innerText = '닉네임은 3~20 글자여야 합니다'
+        this.signupPermission &&= false
+      } else {
+        axios.get(secosi.accounts.nicknameCheck() + '/' + this.nickname)
+          .then(res => {
+            if (res.data.message) {
+              nickname.style.display = 'none'
+              this.signupPermission ||= true
+            }
+          })
+          .catch(err => {
+            this.signupPermission &&= false
+            if (err.response.data.statusCode === 409) {
+              nickname.style.display = 'block'
+              nickname.innerText = '중복되는 닉네임입니다'
+            } else {
+              nickname.style.display = 'block'
+              nickname.innerText = 'Invalid nickname'
+            }
+          })
+      }
+    }
+    const pwValid = function passwordValid() {
+      const password = document.querySelector('.password-check')
+      const pattern1 = /[0-9]/
+	    const pattern2 = /[a-zA-Z]/
+	    const pattern3 = /[~!@#$%^&*()_+|<>?:{}]/
+      if (!pattern1.test(this.password) || !pattern2.test(this.password) || !pattern3.test(this.password) || this.password.length < 8) {
+        password.style.display = 'block'
+        password.innerText = '비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성되어야 합니다'
+        this.signupPermission &&= false
+      } else {
+        password.style.display = 'none'
+        this.signupPermission ||= true
+      }
+    }
+    const pwCheckValid = function passwordCheckValid() {
+      const passwordCheck = document.querySelector('.passwordCheck-check')
+      if (this.password === this.passwordCheck) {
+        passwordCheck.style.display = 'none'
+        this.signupPermission ||= true
+      } else {
+        passwordCheck.style.display = 'block'
+        passwordCheck.innerText = '비밀번호와 일치하지 않습니다'
+        this.signupPermission &&= false
+      }
+    }
+
     return{
-      signup,
-      pwCheck,
+      signupValid,
+      userIdValid,
+      emailValid,
+      nicknameValid,
+      pwValid,
+      pwCheckValid,
     }
   }
 })
 </script>
 
 <style scoped>
+.userId-check, .email-check, .nickname-check, .password-check , .passwordCheck-check{
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0rem;
+  margin-left: 0.5rem;
+  color: #f00e0e;
+  top: 1.8rem;
+  display: none;
+}
 .modal {
   position: fixed;
   z-index: 10;
@@ -195,7 +277,7 @@ export default defineComponent ({
   margin-bottom: 0.5rem;
   width: 80%;
 }
-.form-validation.error {
+/* .form-validation.error {
   margin-bottom: 1.5rem;
   position:relative;
   border: 1px solid #f00e0e;
@@ -214,10 +296,10 @@ export default defineComponent ({
   position: absolute;
   top: 1.8rem;
   display: none;
-}
-.form-validation.error p {
+} */
+/* .form-validation.error p {
   display: block;
-}
+} */
 .modal-input {
   display: block;
   padding-left: 0.5rem;
