@@ -55,6 +55,6 @@ export const useAccounts = defineStore({
         .catch(err => {
           console.error(err.response.data)
         })
-    },
+      },
   }
 })
