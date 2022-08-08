@@ -1,18 +1,21 @@
 <template>
   <div class="Community row">
-    <div class="col-10 offset-1 col-md-8 offset-md-2 col-xxl-6 offset-xxl-3">
-      <h1 class="fw-bold">community</h1>
-      <div class="dropdown" v-for="(performGenre, index) in performGenres" :key="index">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          {{ performGenre }}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li v-for="(dropdownItem, index) in dropdownItems" :key="index">
-            <a class="dropdown-item" @click="updateArticles">{{ dropdownItem }}</a>
-          </li>
-        </ul>
+    <!-- <div class="col-10 offset-1 col-md-8 offset-md-2 col-xxl-6 offset-xxl-3"> -->
+    <div>
+      <div class="mt-2 d-flex justify-content-between">
+        <div class="dropdown" v-for="(communityCategory, index) in communityCategories" :key="index">
+          <button class="dropbtn">{{ communityCategory }}</button>
+        </div>
+        <div class="dropdown" v-for="(performGenre, index) in performGenres" :key="index">
+          <button class="dropbtn">{{ performGenre }}</button>
+          <div class="dropdown-content">
+            <a href="#" v-for="(dropdownContent, index) in dropdownContents" :key="index">{{ dropdownContent }}</a>
+          </div>
+        </div>
       </div>
+
+      <hr class="mt-0">
+      <h4 class="fw-bold">community</h4>
 
       <div class="d-flex justify-content-end button-div">
         <router-link to="/ArticleCreate" class="">
@@ -30,12 +33,6 @@
         </li>
       </ul>
     </div>
-
-    <form @submit="plus">
-      <input type="text" v-model="plusItem">
-      <button>plus</button>
-    </form>
-
   </div>
 </template>
 
@@ -46,26 +43,15 @@ export default {
   data() {
     return {
       articles: "",
-      dropdownItems: ['리뷰게시판', '자유게시판'],
-      performGenres: ['전체', '뮤지컬'],
+      dropdownContents: ['리뷰게시판', '자유게시판'],
+      communityCategories: ['전체', '공지'],
+      performGenres: ['뮤지컬', '연극', '클래식', '아동', '복합'],
       plusItem: "",
     };
   },
   computed: {
   },
   methods: {
-    updateArticles(event) {
-      event.preventDefault()
-
-      // community id를 받아오는 부분에서 의논이 필요할 것임
-      // 당장 생각나는 방법으로는
-      // created에서 장르-communityID 매칭이 되어있는 데이터를 받아서 data()에 넣고 시작하는 것
-
-      // axios.get('http://127.0.0.1:8000/articles/:communityid/')
-      //   .then(response => {
-      //     this.articles = response.data
-      //   })
-    },
 
     // 실험용
     plus(event) {
@@ -75,15 +61,48 @@ export default {
     }
   },
   created() {
-    // 페이지 생성 시 community로 요청 보내서 데이터 받아오고 articles data에 저장
-    //        ==> template에 for문 돌려서 띄워버리기
-    // axios.get('http://127.0.0.1:8000/community/')
-    //   .then(response => {
-    //     this.articles = response.data
-    //   })
   }
 };
 </script>
 
 <style scoped>
+.dropbtn {
+  background-color: #F9F9F9;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 88px;
+  height: 40px;
+}
+.dropdown:hover .dropbtn {
+  background-color: #1B3C33;
+  color: white;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 </style>
