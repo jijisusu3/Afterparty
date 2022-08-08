@@ -24,7 +24,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @GetMapping("")
+    @GetMapping("/users")
     @ApiOperation(value = "정지된 유저 전체 목록 조회", notes = "정지된 유저의 전체 목록을 가져온다. ")
     public ResponseEntity<List<AdminStopUserRes>> getStopUserAllList() {
 
