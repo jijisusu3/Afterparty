@@ -10,7 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -63,6 +65,13 @@ public class User extends BaseEntity {
     private String authKey;
 
     private Boolean authStatus;
+
+    private boolean is_staff;
+
+    private boolean is_ban;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<UserReport> userreports = new ArrayList<>();
 
     /*
     연관관계 설정 (db연관관계 -> 객체 연관관계 코드로 표현하는곳)
