@@ -30,7 +30,7 @@
   </nav>
 </div>
 <div class="card">
-  <div v-for="perform in performShow" :key="perform.poster" class="card" style="width: 18rem;">
+  <div v-for="perform in performList.performs" :key="perform.poster" class="card" style="width: 18rem;">
     <img class="card-img-top" :src='`${perform.poster}`' alt="Card image cap">
     <div class="card-body">
       <p class="card-text">{{perform.prfnm}}  [{{perform.genrenm}}]</p>
@@ -38,24 +38,56 @@
       <p class="card-text">{{perform.fcltynm}}</p>
     </div>
   </div>
-  <infinite-loading />
+  <!-- <infinite-loading @infinite="load"></infinite-loading> -->
 </div>
 </template>
 
 <script>
-import { loadPerform } from '@/stores/performs'
+// import { loadPerform } from '@/stores/performs'
+import axios from 'axios'
 
 export default {
   name:'PerformView',
   setup(){
-    const performList = loadPerform()
-    const performGet = performList.fetchPerforms()
-    const performShow = performList.performs
+    const performList = reactive({
+      performs: [],
+    })
+    const fetchPerform = () => {
+      axios.get(secosi.performs.performs())
+        .then(res => {
+          this.performs=res.data
+        })
+    }
+    // const performList = loadPerform()
+    // const performGet = performList.fetchPerforms()
+    // const performShow = performList.performs
+    // let page = 0
+    // const load = async $state => {
+    //   page++;
+    //   console.log('----------------------------');
+    //   try {
+    //     const response = await fetchPerforms()
+    //     console.log('2222222222222222222222222222222');
+    //     if (response.length < 10){
+    //       $state.complete()
+    //       console.log('3333333333333333333333333333333');
+    //     }  else {
+    //       performs.value.push(...response)
+    //       $state.loaded()
+    //       console.log('44444444444444444444444444');
+    //     }
+    //   } catch (error) {
+    //     $state.error()
+    //   }
+    // }
 
-    return{
+    return {
       performList,
-      performGet,
-      performShow,
+      fetchPerform,
+      // performGet,
+      // performShow,
+      // load,
+      // page
     }
   },
 
