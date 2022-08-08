@@ -34,11 +34,11 @@ public class AdminController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/users/{name}")
     @ApiOperation(value = "정지된 유저 전체 목록 조회", notes = "정지된 유저의 전체 목록을 가져온다. ")
-    public ResponseEntity<List<AdminStopUserRes>> searchStopUserList(@PathVariable String userId) {
+    public ResponseEntity<List<AdminStopUserRes>> searchStopUserList(@PathVariable String name) {
 
-        List<AdminStopUserRes> res = adminService.searchStopUserList(userId);
+        List<AdminStopUserRes> res = adminService.searchStopUserList(name);
 
         return ResponseEntity.status(200).body(res);
     }

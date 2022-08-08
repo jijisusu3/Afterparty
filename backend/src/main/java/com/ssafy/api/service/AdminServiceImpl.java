@@ -50,8 +50,8 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<AdminStopUserRes> searchStopUserList(String userId) {
-        List<AdminStopUserRes> userReportList = adminRepositorySupport.findByUserId(userId);
+    public List<AdminStopUserRes> searchStopUserList(String name) {
+        List<AdminStopUserRes> userReportList = adminRepositorySupport.findByUserId(name);
 
         List<AdminStopUserRes> res = new ArrayList<>();
 

@@ -46,14 +46,14 @@ public class AdminRepositorySupport {
         return cnt;
     }
 
-    public List<AdminStopUserRes> findByUserId(String userId) {
+    public List<AdminStopUserRes> findByUserId(String name) {
         List<AdminStopUserRes> userReports= jpaQueryFactory.select(Projections.fields (AdminStopUserRes.class,
                         qUserReport.user_id.as("user_id"),
                         qUser.name.as("name"),
                         qUserReport.latest_report_day.max().as("latest_report_day"),
                         qUser.is_ban.as("is_ban")))
                 .from(qUserReport, qUser)
-                .where(qUserReport.user_id.eq(userId))
+                .where(qUserReport.user_id.eq(qUser.userId), qUserReport.user.name.eq(name))
                 .groupBy(qUserReport.user_id)
                 .fetch();
 
