@@ -383,9 +383,8 @@ public class PerformServiceImpl implements PerformService{
 
             // 파싱할 tag
             NodeList nList = doc.getElementsByTagName("boxof");
-            System.out.println("파싱할 리스트 수 : "+ nList.getLength());
 
-            for(int temp = 0; temp < nList.getLength(); temp++){
+            for(int temp = 0; temp < 5; temp++){
                 Node nNode = nList.item(temp);
                 if(nNode.getNodeType() == Node.ELEMENT_NODE){
                     Element eElement = (Element) nNode;
