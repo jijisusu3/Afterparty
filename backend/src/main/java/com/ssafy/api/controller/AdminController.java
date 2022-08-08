@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,15 @@ public class AdminController {
     public ResponseEntity<List<AdminStopUserRes>> getStopUserAllList() {
 
         List<AdminStopUserRes> res = adminService.getStopUserAllList();
+
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @GetMapping("/users/{userId}")
+    @ApiOperation(value = "정지된 유저 전체 목록 조회", notes = "정지된 유저의 전체 목록을 가져온다. ")
+    public ResponseEntity<List<AdminStopUserRes>> searchStopUserList(@PathVariable String userId) {
+
+        List<AdminStopUserRes> res = adminService.searchStopUserList(userId);
 
         return ResponseEntity.status(200).body(res);
     }

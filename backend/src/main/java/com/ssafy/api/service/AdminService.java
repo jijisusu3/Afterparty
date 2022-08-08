@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AdminService {
     List<AdminStopUserRes> getStopUserAllList();
+
+    List<AdminStopUserRes> searchStopUserList(String userId);
 }
