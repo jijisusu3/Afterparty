@@ -5,14 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
-import com.ssafy.api.service.CommunityServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -69,6 +66,8 @@ public class User extends BaseEntity {
     private boolean is_staff;
 
     private boolean is_ban;
+
+    private int report_cnt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserReport> userreports = new ArrayList<>();

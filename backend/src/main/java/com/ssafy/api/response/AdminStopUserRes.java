@@ -1,6 +1,5 @@
 package com.ssafy.api.response;
 
-import com.ssafy.db.entity.UserReport;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.Getter;
@@ -18,18 +17,21 @@ public class AdminStopUserRes {
     //신고된 유저 네임
     String name;
     //신고된 횟수
-    long report_cnt;
+    int report_cnt;
     //유저의 정지 여부
     Boolean is_ban;
     //마지막 신고 날짜
     LocalDateTime latest_report_day;
 
-//    public AdminStopUserRes() {}
-//
-//    public AdminStopUserRes(String user_id, String name, Boolean is_ban, LocalDateTime latest_report_day) {
-//        this.user_id = user_id;
-//        this.name = name;
-//        this.is_ban = is_ban;
-//        this.latest_report_day = latest_report_day;
-//    }
+    public static AdminStopUserRes of(AdminStopUserRes stopRes){
+        AdminStopUserRes res = new AdminStopUserRes();
+
+        res.setUser_id(stopRes.getUser_id());
+        res.setName(stopRes.getName());
+        res.setLatest_report_day(stopRes.getLatest_report_day());
+        res.setIs_ban(stopRes.getIs_ban());
+        res.setReport_cnt(stopRes.getReport_cnt());
+
+        return res;
+    }
 }

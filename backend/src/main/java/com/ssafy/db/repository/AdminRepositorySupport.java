@@ -1,6 +1,5 @@
 package com.ssafy.db.repository;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.response.AdminStopUserRes;
@@ -24,8 +23,9 @@ public class AdminRepositorySupport {
         List<AdminStopUserRes> userReports= jpaQueryFactory.select(Projections.fields (AdminStopUserRes.class,
                         qUserReport.user_id.as("user_id"),
                         qUser.name.as("name"),
-                        qUserReport.latest_report_day.max().as("latest_report_day"),
-                        qUser.is_ban.as("is_ban")))
+                        qUser.report_cnt.as("report_cnt"),
+                        qUser.is_ban.as("is_ban"),
+                        qUserReport.latest_report_day.max().as("latest_report_day")))
                 .from(qUserReport, qUser)
                 .where(qUserReport.user_id.eq(qUser.userId))
                 .groupBy(qUserReport.user_id)
@@ -36,22 +36,13 @@ public class AdminRepositorySupport {
         return userReports;
     }
 
-    public long countByUserId(String user_id) {
-        if(user_id==null) return 0;
-
-        long cnt = jpaQueryFactory.select(qUserReport).from(qUserReport)
-                .where(qUserReport.user_id.eq(user_id))
-                .fetchCount();
-
-        return cnt;
-    }
-
-    public List<AdminStopUserRes> findByUserId(String name) {
+    public List<AdminStopUserRes> findByName(String name) {
         List<AdminStopUserRes> userReports= jpaQueryFactory.select(Projections.fields (AdminStopUserRes.class,
                         qUserReport.user_id.as("user_id"),
                         qUser.name.as("name"),
-                        qUserReport.latest_report_day.max().as("latest_report_day"),
-                        qUser.is_ban.as("is_ban")))
+                        qUser.report_cnt.as("report_cnt"),
+                        qUser.is_ban.as("is_ban"),
+                        qUserReport.latest_report_day.max().as("latest_report_day")))
                 .from(qUserReport, qUser)
                 .where(qUserReport.user_id.eq(qUser.userId), qUserReport.user.name.eq(name))
                 .groupBy(qUserReport.user_id)
