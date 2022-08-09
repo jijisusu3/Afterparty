@@ -27,11 +27,10 @@ public class AdminRepositorySupport {
                         qUser.is_ban.as("is_ban"),
                         qUserReport.latest_report_day.max().as("latest_report_day")))
                 .from(qUserReport, qUser)
-                .where(qUserReport.user_id.eq(qUser.userId), qUser.is_ban.eq(true))
+                .where(qUserReport.user_id.eq(qUser.userId),
+                        qUser.is_ban.eq(true))
                 .groupBy(qUserReport.user_id)
                 .fetch();
-
-        userReports.forEach(System.out::println);
 
         return userReports;
     }
@@ -44,7 +43,9 @@ public class AdminRepositorySupport {
                         qUser.is_ban.as("is_ban"),
                         qUserReport.latest_report_day.max().as("latest_report_day")))
                 .from(qUserReport, qUser)
-                .where(qUserReport.user_id.eq(qUser.userId), qUserReport.user.name.eq(name))
+                .where(qUserReport.user_id.eq(qUser.userId),
+                        qUser.is_ban.eq(true),
+                        qUserReport.user.name.eq(name))
                 .groupBy(qUserReport.user_id)
                 .fetch();
 
