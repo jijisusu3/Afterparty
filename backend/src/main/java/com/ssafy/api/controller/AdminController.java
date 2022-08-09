@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.response.AdminReportRes;
 import com.ssafy.api.response.AdminStopUserRes;
 import com.ssafy.api.service.AdminService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -56,5 +57,14 @@ public class AdminController {
         adminService.updateIs_ban(user, name);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("/report")
+    @ApiOperation(value = "신고 목록 조회", notes = "신고 전체 목록을 가져온다. ")
+    public ResponseEntity<List<AdminReportRes>> getReportAllList() {
+
+        List<AdminReportRes> res = adminService.getReportAllList();
+
+        return ResponseEntity.status(200).body(res);
     }
 }

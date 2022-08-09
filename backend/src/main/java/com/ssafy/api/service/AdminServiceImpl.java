@@ -1,9 +1,12 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.response.AdminReportRes;
 import com.ssafy.api.response.AdminStopUserRes;
 import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.QUserReport;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.UserReport;
+import com.ssafy.db.repository.AdminRepository;
 import com.ssafy.db.repository.AdminRepositorySupport;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
@@ -15,6 +18,9 @@ import java.util.List;
 
 @Service("AdminService")
 public class AdminServiceImpl implements AdminService{
+
+    @Autowired
+    AdminRepository adminRepository;
     @Autowired
     AdminRepositorySupport adminRepositorySupport;
 
@@ -63,5 +69,18 @@ public class AdminServiceImpl implements AdminService{
         updateUser.setReport_cnt(0);
 
         userRepository.save(updateUser);
+    }
+
+    @Override
+    public List<AdminReportRes> getReportAllList() {
+        List<UserReport> reportList = adminRepository.findAll();
+
+        List<AdminReportRes> res = new ArrayList<>();
+
+        for (UserReport report : reportList) {
+            res.add(AdminReportRes.of(report));
+        }
+
+        return res;
     }
 }
