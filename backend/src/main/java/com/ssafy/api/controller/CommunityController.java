@@ -63,7 +63,7 @@ public class CommunityController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @GetMapping("/{_genre}/{_category}")
+    @GetMapping("/{article_genre}/{article_category}")
     @ApiOperation(value = "장르/카테고리별 게시글 목록 조회", notes = "장르/카테고리별 게시글 목록을 조회한다.")
     public ResponseEntity<List<CommunityRes>> getList(
             @PathVariable int article_genre,
@@ -73,7 +73,7 @@ public class CommunityController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @GetMapping("/{_genre}/{_category}/{searchcategory}/{searchword}")
+    @GetMapping("/{article_genre}/{article_category}/{searchcategory}/{searchword}")
     @ApiOperation(value = "장르/카테고리별 게시글 목록 조회", notes = "장르/카테고리별 게시글 목록을 조회한다.")
     public ResponseEntity<List<CommunityRes>> getList(
             @PathVariable int article_genre,

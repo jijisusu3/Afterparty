@@ -51,7 +51,12 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findCommunityListByGenre(genre, category);
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu : communityList){
-            res.add(CommunityRes.of(commu,
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
                     commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;
@@ -62,7 +67,12 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findCommunityListSearch(genre, category, searchcategory, searchword);
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu : communityList){
-            res.add(CommunityRes.of(commu,
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
                     commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;
@@ -75,7 +85,12 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findAllCommunityList();
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu: communityList){
-            res.add(CommunityRes.of(commu,
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
                     commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;
@@ -145,7 +160,12 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findCommunityListByUserId(userId);
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu: communityList){
-            res.add(CommunityRes.of(commu,
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
                     commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;
@@ -166,7 +186,12 @@ public class CommunityServiceImpl implements CommunityService{
         List<Community> communityList = communityRepositorySupport.findByRecommend();
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu: communityList){
-            res.add(CommunityRes.of(commu,
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
                     commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;

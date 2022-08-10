@@ -24,16 +24,21 @@ public class CommunityRes {
     //댓글 수
     long comment_cnt;
 
-    public static CommunityRes of(Community community,
-                                  long cnt) {
+    public static CommunityRes of(long article_id,
+                                  String article_title,
+                                  String user_id,
+                                  int view_cnt,
+                                  int recommend,
+                                  long comment_cnt) {
         CommunityRes res = new CommunityRes();
         //------글 목록 항목
-        res.setArticle_id(community.getArticle_id());
-        res.setArticle_title(community.getArticle_title());
-        res.setUser_id(community.getUser().getUserId());
-        res.setView_cnt(community.getView_cnt());
-        res.setRecommend(community.getRecommend());
-        res.setComment_cnt(cnt);
+        res.setArticle_id(article_id);
+        res.setArticle_title(article_title);
+        res.setUser_id(user_id);
+        res.setView_cnt(view_cnt);
+        res.setRecommend(recommend);
+        res.setComment_cnt(comment_cnt);
+
         return res;
     }
 
