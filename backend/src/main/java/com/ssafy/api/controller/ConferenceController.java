@@ -3,7 +3,9 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceRes;
+import com.ssafy.api.response.FollowingRes;
 import com.ssafy.api.service.ConferenceService;
+import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Conference;
@@ -30,6 +32,9 @@ public class ConferenceController {
 
     @Autowired
     ConferenceService conferenceService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("")
     @ApiOperation(value = "화상회의 전체 목록 조회", notes = "전체 화상회의 목록을 가져온다. ")
@@ -73,5 +78,24 @@ public class ConferenceController {
         Conference conference = conferenceService.createConference(user, conferenceInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("/follow")
+    @ApiOperation(value = "화상회의 팔로우 목록 조회", notes = "화상회의 목록에서 팔로우한 방장의 화상회의 방 목록을 가져온다. ")
+    public ResponseEntity<List<ConferenceRes>> getConferenceFollowList(
+            @ApiIgnore Authentication authentication
+    ) {
+        /**
+         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
+         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
+         */
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<FollowingRes> followingUser = userService.getFollowingListByUserId(user.getUserId());
+
+        List<ConferenceRes> res = conferenceService.getConferenceFollowList(followingUser);
+
+        return ResponseEntity.status(200).body(res);
     }
 }

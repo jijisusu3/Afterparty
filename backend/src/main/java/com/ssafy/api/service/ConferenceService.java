@@ -4,6 +4,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceRes;
+import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.User;
 
@@ -24,4 +25,7 @@ public interface ConferenceService {
     List<ConferenceRes> searchConferenceNoKeyword(ConferenceGetReq searchInfo);
 
     Conference createConference(User user, ConferenceRegistPostReq conferenceInfo);
+
+    List<ConferenceRes> getConferenceFollowList(List<FollowingRes> followingUser);
+
 }
