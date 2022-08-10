@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * 커뮤니치 관련 API 요청 처리를 위한 컨트롤러 정의.
+ * 커뮤니티 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
 
 @Api(value = "커뮤니티 API", tags = {"Community"})
@@ -39,8 +39,8 @@ public class CommunityController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> Register(
-            @RequestBody @ApiParam(value = "글 작성 정보", required = true) CommunityRegistPostReq communityRegisterInfo
-            ,@ApiIgnore Authentication authentication) {
+            @RequestBody @ApiParam(value = "글 작성 정보", required = true) CommunityRegistPostReq communityRegisterInfo,
+            @ApiIgnore Authentication authentication) {
 
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
@@ -48,7 +48,9 @@ public class CommunityController {
          */
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
+
         Community community = communityService.create(user, communityRegisterInfo);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -57,6 +59,7 @@ public class CommunityController {
     @ApiOperation(value = "전체 게시글 목록 조회", notes = "전체 게시글 목록을 조회한다.")
     public ResponseEntity<List<CommunityRes>> getAllList(){
         List<CommunityRes> res = communityService.getAllList();
+
         return ResponseEntity.status(200).body(res);
     }
 
@@ -66,6 +69,7 @@ public class CommunityController {
             @PathVariable int _genre,
             @PathVariable int _category) {
         List<CommunityRes> res = communityService.getListByGenre(_genre,_category);
+
         return ResponseEntity.status(200).body(res);
     }
 
@@ -77,6 +81,7 @@ public class CommunityController {
             @PathVariable String searchcategory,
             @PathVariable String searchword) {
         List<CommunityRes> res = communityService.getListSearch(_genre,_category, searchcategory, searchword);
+
         return ResponseEntity.status(200).body(res);
     }
 
@@ -87,7 +92,7 @@ public class CommunityController {
             @ApiResponse(code = 401, message = ""),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Community> getDetails(@PathVariable long _id){
+    public ResponseEntity<Community> getDetails(@PathVariable long _id) {
         Community community = communityService.getById(_id);
 
         return ResponseEntity.status(200).body(community);
@@ -106,6 +111,7 @@ public class CommunityController {
             @ApiIgnore Authentication authentication){
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         communityService.update(_id, Info);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -116,11 +122,9 @@ public class CommunityController {
             @ApiResponse(code = 401, message = "게시글 삭제 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> delete(
-            @PathVariable("_id") long _id
-    ) {
-
+    public ResponseEntity<? extends BaseResponseBody> delete(@PathVariable("_id") long _id) {
         communityService.deletearticle(_id);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
     }
@@ -134,16 +138,18 @@ public class CommunityController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> recommendarticle(
-            @PathVariable("_id") long _id
-            ,@ApiIgnore Authentication authentication) {
+            @PathVariable("_id") long _id,
+            @ApiIgnore Authentication authentication) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
          */
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
+
         Community community = communityService.getById(_id);
         communityService.recommend(_id);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -156,11 +162,11 @@ public class CommunityController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> ViewCnt(
-            @PathVariable("_id") long _id
-            ,@ApiIgnore Authentication authentication
-    ){
+            @PathVariable("_id") long _id,
+            @ApiIgnore Authentication authentication) {
         Community commu = communityService.getById(_id);
         communityService.updateViewCnt(_id,commu);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -174,17 +180,19 @@ public class CommunityController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> commentRegister(
-            @RequestParam @ApiParam(value = "댓글 정보", required = true) String comment
-            ,@ApiIgnore Authentication authentication
-            ,@PathVariable long _id) {
+            @RequestParam @ApiParam(value = "댓글 정보", required = true) String comment,
+            @ApiIgnore Authentication authentication,
+            @PathVariable long _id) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
          */
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
+
         Community community = communityService.getById(_id);
         Comment comments = communityService.createComment(user, comment, community);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -199,11 +207,12 @@ public class CommunityController {
             @PathVariable long _id,
             @PathVariable long comment_id,
             @RequestParam @ApiParam(value = "댓글 정보", required = true) String comment,
-            @ApiIgnore Authentication authentication
-    ){
+            @ApiIgnore Authentication authentication) {
         Comment comments = communityService.updateComment(comment, comment_id);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
     @DeleteMapping("/{_id}/comments/{comment_id}")
     @ApiOperation(value = "댓글 삭제", notes="댓글을 삭제한다.")
     @ApiResponses({
@@ -211,9 +220,9 @@ public class CommunityController {
             @ApiResponse(code = 401, message = ""),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteComments(
-            @PathVariable long comment_id){
+    public ResponseEntity<? extends BaseResponseBody> deleteComments(@PathVariable long comment_id) {
         communityService.deleteComment(comment_id);
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
     //------------차송희 끝---------------------------------
