@@ -2,11 +2,10 @@ package com.ssafy.api.service;
 
 
 import com.ssafy.api.request.ConferenceGetReq;
-import com.ssafy.api.request.PerformGetReq;
+import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceRes;
-import com.ssafy.api.response.PerformInfoRes;
-import com.ssafy.api.response.PerformRes;
-import com.ssafy.db.entity.Gugun;
+import com.ssafy.db.entity.Conference;
+import com.ssafy.db.entity.User;
 
 import java.util.List;
 
@@ -23,4 +22,6 @@ public interface ConferenceService {
     List<ConferenceRes> searchConference(ConferenceGetReq searchInfo);
 
     List<ConferenceRes> searchConferenceNoKeyword(ConferenceGetReq searchInfo);
+
+    Conference createConference(User user, ConferenceRegistPostReq conferenceInfo);
 }
