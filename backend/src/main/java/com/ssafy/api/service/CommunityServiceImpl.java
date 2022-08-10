@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.CommunityRegistPostReq;
 import com.ssafy.api.response.CommunityRes;
-import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
@@ -13,9 +12,13 @@ import com.ssafy.db.repository.CommunityRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *	커뮤니티 API 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
+ */
 @Service("CommunityService")
 public class CommunityServiceImpl implements CommunityService{
     //차송희 커뮤니티 시작-------------------------------------------
@@ -33,66 +36,84 @@ public class CommunityServiceImpl implements CommunityService{
 
 
     @Override
-    public Community createArticle(User userInfo, CommunityRegistPostReq communityRegisterInfo) {
+    public Community create(User userInfo, CommunityRegistPostReq communityRegisterInfo) {
         Community community = new Community();
-        community.setArticle_genre(communityRegisterInfo.getAlticle_genre());
-        community.setArticle_category(communityRegisterInfo.getAlticle_category());
-        community.setArticle_title(communityRegisterInfo.getAlticle_title());
-        community.setArticle_content(communityRegisterInfo.getAlticle_content());
+        community.setArticle_genre(communityRegisterInfo.getArticle_genre());
+        community.setArticle_category(communityRegisterInfo.getArticle_category());
+        community.setArticle_title(communityRegisterInfo.getArticle_title());
+        community.setArticle_content(communityRegisterInfo.getArticle_content());
         community.setUser(userInfo);
         return communityRepository.save(community);
     }
     //장르별 글 목록 가져오기
     @Override
-    public List<CommunityRes> getArticleListByGenre(int genre, int category) {
+    public List<CommunityRes> getListByGenre(int genre, int category) {
         List<Community> communityList = communityRepositorySupport.findCommunityListByGenre(genre, category);
         List<CommunityRes> res = new ArrayList<>();
         for(Community commu : communityList){
-            res.add(CommunityRes.of(commu.getArticle_title(),
-                    commu.getUser().getUserId(),
-                    commu.getView_cnt(),
-                    commu.getRecommend(),
-                    commentRepositorySupport.countCommentByArticleId(commu.getArticle_id())));
-        }
-        return res;
-    }
-
-    //전체 글 목록 가져오기
-    @Override
-    public List<CommunityRes> getAllArticleList() {
-        List<Community> communityList = communityRepositorySupport.findAllCommunityList();
-        List<CommunityRes> res = new ArrayList<>();
-        for(Community commu: communityList){
             res.add(CommunityRes.of(
+                    commu.getArticle_id(),
                     commu.getArticle_title(),
                     commu.getUser().getUserId(),
                     commu.getView_cnt(),
                     commu.getRecommend(),
-                    commentRepositorySupport.countCommentByArticleId(commu.getArticle_id())));
+                    commentRepositorySupport.countCommentById(commu.getArticle_id())));
         }
         return res;
     }
 
     @Override
-    public Community getArticleByArticleId(long article_id) {
-        System.out.println("article_id : "+article_id);
-        Community res = communityRepositorySupport.findArticleByArticleId(article_id);
-        System.out.println("res : "+res);
+    public List<CommunityRes> getListSearch(int genre, int category, String searchcategory, String searchword) {
+        List<Community> communityList = communityRepositorySupport.findCommunityListSearch(genre, category, searchcategory, searchword);
+        List<CommunityRes> res = new ArrayList<>();
+        for(Community commu : communityList){
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentById(commu.getArticle_id())));
+        }
+        return res;
+    }
+
+
+    //전체 글 목록 가져오기
+    @Override
+    public List<CommunityRes> getAllList() {
+        List<Community> communityList = communityRepositorySupport.findAllCommunityList();
+        List<CommunityRes> res = new ArrayList<>();
+        for(Community commu: communityList){
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentById(commu.getArticle_id())));
+        }
         return res;
     }
 
     @Override
-    public void updateArticle(long article_id, CommunityRegistPostReq articleInfo) {
-        Community updateArticle = communityRepositorySupport.findArticleByArticleId(article_id);
-        updateArticle.setArticle_title(articleInfo.getAlticle_title());
-        updateArticle.setArticle_content(articleInfo.getAlticle_content());
-        communityRepository.save(updateArticle);
+    public Community getById(long article_id) {
+        Community res = communityRepositorySupport.findById(article_id);
+        return res;
     }
 
     @Override
-    public void deleteAlticle(long article_id) {
-        Community deleteArticle = communityRepositorySupport.findArticleByArticleId(article_id);
-        communityRepository.deleteById(deleteArticle.getArticle_id());
+    public void update(long article_id, CommunityRegistPostReq Info) {
+        Community update = communityRepositorySupport.findById(article_id);
+        update.setArticle_title(Info.getArticle_title());
+        update.setArticle_content(Info.getArticle_content());
+        communityRepository.save(update);
+    }
+
+    @Override
+    public void deletearticle(long article_id) {
+        Community delete = communityRepositorySupport.findById(article_id);
+        communityRepository.deleteById(delete.getArticle_id());
     }
     //----------------------댓글 CRUD-------------------------------------------------------
     @Override
@@ -115,6 +136,65 @@ public class CommunityServiceImpl implements CommunityService{
     public void deleteComment(long comment_id) {
         Comment deleteComment = commentRepositorySupport.findCommentByCommentId(comment_id);
         commentRepository.deleteById(comment_id);
+    }
+    @Override
+    @Transactional
+    public Community recommend(long article_id) {
+        Community recommendCommunity = communityRepositorySupport.findById(article_id);
+        int currentRecommend = recommendCommunity.getRecommend();
+        recommendCommunity.setRecommend(currentRecommend+1);
+        return communityRepository.save(recommendCommunity);
+    }
+
+    @Override
+    @Transactional
+    public Community updateViewCnt(long article_id, Community community){
+        Community updateCommunity = communityRepositorySupport.findById(article_id);
+        int currnetViewCnt = updateCommunity.getView_cnt();
+        updateCommunity.setView_cnt(currnetViewCnt+1);
+        return communityRepository.save(updateCommunity);
+    }
+
+    @Override
+    public List<CommunityRes> getListByUserId(String userId) {
+        List<Community> communityList = communityRepositorySupport.findCommunityListByUserId(userId);
+        List<CommunityRes> res = new ArrayList<>();
+        for(Community commu: communityList){
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentById(commu.getArticle_id())));
+        }
+        return res;
+    }
+
+    @Override
+    public List<String> getCommentListByUserId(String userId) {
+        List<Comment> commentList = commentRepositorySupport.findCommentListByUserId(userId);
+        List<String> res = new ArrayList<>();
+        for(Comment comment: commentList){
+            res.add(comment.getComment_content());
+        }
+        return res;
+    }
+
+    @Override
+    public List<CommunityRes> getPopularList() {
+        List<Community> communityList = communityRepositorySupport.findByRecommend();
+        List<CommunityRes> res = new ArrayList<>();
+        for(Community commu: communityList){
+            res.add(CommunityRes.of(
+                    commu.getArticle_id(),
+                    commu.getArticle_title(),
+                    commu.getUser().getUserId(),
+                    commu.getView_cnt(),
+                    commu.getRecommend(),
+                    commentRepositorySupport.countCommentById(commu.getArticle_id())));
+        }
+        return res;
     }
     //차송희 커뮤니티 끝-------------------------------------------
 }

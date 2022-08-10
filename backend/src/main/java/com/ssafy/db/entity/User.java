@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
-import com.ssafy.api.service.CommunityServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,12 +59,30 @@ public class User extends BaseEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    private String authKey;
+
+    private Boolean authStatus;
+
+    private boolean is_staff;
+
+    private boolean is_ban;
+
+    private int report_cnt;
+
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+//    private List<UserReport> userreports = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+//    private List<Conference> conferences = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+//    private List<Community> communities = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+//    private List<Comment> comments = new ArrayList<>();
+
     /*
     연관관계 설정 (db연관관계 -> 객체 연관관계 코드로 표현하는곳)
     이해가 안되면 https://ttl-blog.tistory.com/129 여기서 확인
      */
-//    @OneToMany(mappedBy = "user")
-//    private List<Community> communities = new ArrayList<>();
-
-
 }
