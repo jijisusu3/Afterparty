@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.CommunityRegistPostReq;
 import com.ssafy.api.response.CommunityRes;
+import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Comment;
 import com.ssafy.db.entity.Community;
 import com.ssafy.db.entity.User;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ssafy.db.entity.QCommunity.community;
 
 /**
  *	커뮤니티 API 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.

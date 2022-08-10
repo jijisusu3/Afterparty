@@ -4,9 +4,7 @@ import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceInfoRes;
 import com.ssafy.api.response.ConferenceRes;
-import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Conference;
-import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,4 +122,3 @@ public class ConferenceServiceImpl implements ConferenceService{
         return res;
     }
 }
-

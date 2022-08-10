@@ -4,21 +4,13 @@ import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceInfoRes;
 import com.ssafy.api.response.ConferenceRes;
-import com.ssafy.api.response.FollowingRes;
 import com.ssafy.api.service.ConferenceService;
-import com.ssafy.api.service.UserService;
-import com.ssafy.common.auth.SsafyUserDetails;
-import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Conference;
-import com.ssafy.db.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +25,6 @@ public class ConferenceController {
 
     @Autowired
     ConferenceService conferenceService;
-
-    @Autowired
-    UserService userService;
 
     @GetMapping("")
     @ApiOperation(value = "화상회의 전체 목록 조회", notes = "전체 화상회의 목록을 가져온다. ")
