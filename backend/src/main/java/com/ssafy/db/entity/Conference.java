@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -81,7 +83,13 @@ public class Conference {
     )
     private String genrenm;
 
+    @Column(
+            length = 30
+    )
+    private String perform_day;
+
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "fk_user_user_serial")
     private User user;
 }

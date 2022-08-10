@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.QConference;
+import com.ssafy.db.entity.QFollowing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -17,6 +18,7 @@ public class ConferenceRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
 
     QConference qConference = QConference.conference;
+    QFollowing qFollowing = QFollowing.following;
 
     public List<Conference> findBySidoSigungu(ConferenceGetReq searchInfo) {
         List<Conference> conferences = jpaQueryFactory.select(qConference).from(qConference)
@@ -66,7 +68,6 @@ public class ConferenceRepositorySupport {
         } else if (type == 1) { //방제목
             return qConference.title.like("%" + keyword + "%");
         }
-
         return null;
     }
 
@@ -94,4 +95,18 @@ public class ConferenceRepositorySupport {
         return conferences;
     }
     //차송희 끝------------------------------------
+
+    public Conference findConferenceFollowListByUserId(String followingUserId) {
+        Conference conferences = jpaQueryFactory.select(qConference).from(qConference)
+                .where(qConference.owner_id.eq(followingUserId))
+                .fetchOne();
+        return conferences;
+    }
+
+    public Conference findByConferenceId(long conference_id) {
+        Conference conference = jpaQueryFactory.select(qConference).from(qConference)
+                .where(qConference.conference_id.eq(conference_id))
+                .fetchOne();
+        return conference;
+    }
 }
