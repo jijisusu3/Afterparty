@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div>
+    <ArticleNavComponent></ArticleNavComponent>
       <h1>제목 받아올 것</h1>
       <p>내용 받아올 것</p>
 
@@ -24,16 +25,20 @@
 </template>
 
 <script>
+import axios from 'axios'
+import secosi from "@/api/secosi";
+import ArticleNavComponent from '@/views/articles/components/ArticleNavComponent.vue'
 import CommentForm from '@/views/articles/components/CommentForm.vue'
 import CommentList from '@/views/articles/components/CommentList.vue'
 
 export default {
   data() {
     return {
-      articleId: '',
+
     }
   },
   components: {
+    ArticleNavComponent,
     CommentForm,
     CommentList,
   },
@@ -46,16 +51,11 @@ export default {
   methods: {
   },
   created() {
-    // GET 요청 전송 => 응답값따라 data 채워넣고 template에 띄울것
-    // const config = {
-    //   headers: {
-    //     Authorization: `Token ${localStorage.getItem("token")}`,
-    //   },
-    // }
-    // axios.get(`http://127.0.0.1:8000/accounts/${articleId}/`, config)
-    //   .then(response => {
-    //     console.log(response)
-    //   })
+    const articleId = this.$route.params.articleid
+    axios.get(secosi.communities.articleDetail(articleId))
+      .then(res => {
+        console.log(res.data)
+      })
   }
 };
 </script>
