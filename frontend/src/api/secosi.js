@@ -13,6 +13,6 @@ export default {
   },
   performs: {
     performs: () => HOST + PERFORMS,
-    perform: () => HOST + PERFORMS + `${mt20id}`,
+    perform: mt20id => HOST + PERFORMS + `${mt20id}`,
   },
 }

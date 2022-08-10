@@ -65,7 +65,7 @@ const router = createRouter({
       component: () => import('@/views/perform/PerformView.vue')
     },
     {
-      path: '/perform/:performid',
+      path: '/perform/:mt20id',
       name: 'PerformDetail',
       component: () => import('@/views/perform/PerformDetailView.vue')
     },
