@@ -41,7 +41,7 @@ export default {
         'article_title': this.title,
         'article_content': this.content,
       }
-
+      console.log(formData)
       const config = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -49,8 +49,8 @@ export default {
       }
       
       axios.post(secosi.communities.community(), formData, config)
-        .then(response => {
-          console.log(response)
+        .then(res => {
+          this.$router.push({name:'ArticleDetail', params: {articleid: res.data}})
         })
         .catch(err => {
           console.log(err)
