@@ -174,6 +174,7 @@ body{
   top: 8rem;
   left: 50%;
   transform: translate(-50%,-50%);
+  z-index: 1;
 }
 
 .wrapper .search_box{
@@ -201,11 +202,11 @@ body{
 }
 
 .wrapper .search_box .dropdown ul{
-  z-index: 555;
+  z-index: 10;
   overflow-y: scroll;
   height: 240px;
   position: absolute;
-  top: 70px;
+  top: 40px;
   left: -10px;
   background: #fff;
   width: 140px;
@@ -216,6 +217,7 @@ body{
 }
 .wrapper .search_box .dropdown ul li{
   padding-bottom: 20px;
+  z-index: 5;
 }
 
 .wrapper .search_box .dropdown ul li:last-child{
@@ -326,7 +328,10 @@ nav .menuItems li :hover::before{
 }
 .card-body {
   margin: 0;
-  padding: 0.5rem;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  vertical-align: middle;
 }
 .card-img-top {
   width: 200px;
@@ -338,7 +343,7 @@ nav .menuItems li :hover::before{
 }
 .card-date {
   font-size: 10px;
-  height: 24px;
+  height: 20px;
 }
 .card-location {
   font-size: 10px;
@@ -353,5 +358,6 @@ a {
 }
 p{
   margin: 0;
+  overflow: hidden;
 }
 </style>

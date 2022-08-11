@@ -1,17 +1,17 @@
 <template>
   <section class="sm-section">
-  <h3 class="text-dark fw-light lh-base mt-5">{{performInfo.prfnm}}</h3>
+  <h3 class="text-dark fw-light pf-name mt-5">{{performInfo.prfnm}}</h3>
   <hr>
     <div class="container my-4">
       <div class="row info-box">
         <div class="col-lg-12">
           <div class="row ">
-            <div class="col-md-5">
+            <div class="col">
                 <div class="position-relative">
                     <img class="poster-img img-fluid rounded-3" :src="`${performInfo.poster}`" alt="img" />
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col">
                 <div class="pro-detail-content">
                   <div>
                     <table>
@@ -135,18 +135,32 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
+<style scoped>
 .sm-section {
   text-align: center;
 }
+.container {
+  display: flex;
+  justify-content: center;
+}
+.row {
+  display: flex;
+  margin: 0;
+}
 .section {
+  display: flex;
   text-align: center;
 }
 .info-box {
   width: 896px;
+  display: flex;
+  justify-content: center;
 }
 .first-td{
   width: 8rem;
+  background-color: #1b3c33;
+  color: #ffffff;
+  font-weight: bold;
 }
 .poster-img {
   width: 320px;
@@ -169,9 +183,12 @@ table {
 th, td {
   border: 1px solid gray;
   padding: 0.5rem 1rem 0.5rem;
+  text-align: left;
 }
 nav {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 a {
   text-decoration: none;
