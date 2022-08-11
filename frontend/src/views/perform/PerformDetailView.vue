@@ -68,63 +68,33 @@
     <div class="row">
       <div class="col-lg-12">
         <nav class="pro-detail-area">
-          <div class="nav nav-tabs border-bottom detail-title" id="nav-tab" role="tablist">
-            <a class="nav-link border-0 active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home"
-                role="tab" aria-controls="nav-home" aria-selected="true">소개</a>
-            <a class="nav-link border-0" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile"
-                role="tab" aria-controls="nav-profile" aria-selected="false">공연장</a>
+          <div class="nav nav-tabs detail-title" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-info-tab" data-bs-toggle="tab" href="#nav-info"
+                role="tab" aria-controls="nav-info" aria-selected="true">소개</a>
+            <a class="nav-link" id="nav-map-tab" data-bs-toggle="tab" href="#nav-map"
+                role="tab" aria-controls="nav-map" aria-selected="false">공연장</a>
           </div>
         </nav>
         <div class="tab-content py-4" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-              aria-labelledby="nav-home-tab">
-              <p class="text-muted fs-16">
-                  API에서 불러온 소개사진 넣기!!
-              </p>
-
+          <div class="tab-pane fade show active" id="nav-info" role="tabpanel"
+              aria-labelledby="nav-info-tab">
             <div class="row text-muted">
                 <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul class="list-unstyled">
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                        <li class="py-1"><i class="mdi mdi-circle-medium text-primary"></i> API에서 불러온 정보 넣기</li>
-                    </ul>
+                  <!-- <span v-for="(styurl, index) in performInfo.styurls" :key="index"> -->
+                    <!-- <img class="info-img" :src='`${styurl}`' alt="info img"> -->
+                    <!-- <p>{{styurl}}</p> -->
+                  <!-- </span> -->
+                  <!-- <img :src="`${performInfo.styurls}`" alt="img"> -->
+                  <!-- <img :src=`${performInfo.styurls}` alt=""> -->
+                  <p>{{performInfo.sty}}</p>
                 </div>
             </div>
           </div>
 
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <h6 class="lh-base fw-medium">지도 API 넣기!!</h6>
-                <ul class="list-unstyled my-4">
-                    <li class="list-inline d-flex py-3">
-                        <div>
-                            <a href="javascript:void(0)">
-                                <img class="rounded-circle img-thumbnail" src="http://img.insight.co.kr/static/2018/07/26/700/5r387l930063zu4se350.jpg"
-                                    alt="" />
-                            </a>
-                        </div>
-                        <div class="ps-4">
-                            <h6 class="d-inline-block fs-16 mb-0">John Barrows</h6>
-                            <div class="rating d-inline-block ps-sm-4">
-                                <i class="mdi mdi-star fs-16 text-warning d-inline-block"></i>
-                                <h5 class="d-inline-block fs-16">5.0</h5>
-                            </div>
-                            <p class="text-muted">24th January, 2021</p>
-                            <p class="text-muted fs-16">
-                                API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기
-                            </p>
-                        </div>
-                    </li>
-                    <li class="list-inline d-flex py-3">
+          <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
+              <h6 class="lh-base fw-medium">지도 API 넣기!!</h6>
+              <ul class="list-unstyled my-4">
+                  <li class="list-inline d-flex py-3">
                       <div>
                           <a href="javascript:void(0)">
                               <img class="rounded-circle img-thumbnail" src="http://img.insight.co.kr/static/2018/07/26/700/5r387l930063zu4se350.jpg"
@@ -132,19 +102,38 @@
                           </a>
                       </div>
                       <div class="ps-4">
-                          <h6 class="d-inline-block fs-16 mb-0">James Marks</h6>
+                          <h6 class="d-inline-block fs-16 mb-0">John Barrows</h6>
                           <div class="rating d-inline-block ps-sm-4">
                               <i class="mdi mdi-star fs-16 text-warning d-inline-block"></i>
-                              <h5 class="d-inline-block fs-16">4.9</h5>
+                              <h5 class="d-inline-block fs-16">5.0</h5>
                           </div>
-                          <p class="text-muted">2nd January, 2021</p>
+                          <p class="text-muted">24th January, 2021</p>
                           <p class="text-muted fs-16">
                               API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기
                           </p>
                       </div>
-                    </li>
-                </ul>
-            </div>
+                  </li>
+                  <li class="list-inline d-flex py-3">
+                    <div>
+                        <a href="javascript:void(0)">
+                            <img class="rounded-circle img-thumbnail" src="http://img.insight.co.kr/static/2018/07/26/700/5r387l930063zu4se350.jpg"
+                                alt="" />
+                        </a>
+                    </div>
+                    <div class="ps-4">
+                        <h6 class="d-inline-block fs-16 mb-0">James Marks</h6>
+                        <div class="rating d-inline-block ps-sm-4">
+                            <i class="mdi mdi-star fs-16 text-warning d-inline-block"></i>
+                            <h5 class="d-inline-block fs-16">4.9</h5>
+                        </div>
+                        <p class="text-muted">2nd January, 2021</p>
+                        <p class="text-muted fs-16">
+                            API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기
+                        </p>
+                    </div>
+                  </li>
+              </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -199,26 +188,27 @@ export default {
 }
 .nav-tabs {
   width: 896px;
+  border-bottom: solid 5px #1b3c33;
 }
 .nav-link {
   width: 448px;
+  border: 2px solid #1b3c33;
 }
 table {
   border: 1px solid gray;
   border-collapse: collapse;
   height: 456px;
+  width: 544px;
 }
 th, td {
   border: 1px solid gray;
   padding: 0.5rem 1rem 0.5rem;
 }
-hr {
-  width: 896px;
-  // margin: 0;
-  // margin-block: 0;
-  // margin-inline: 0;
-}
 nav {
   text-align: center;
+}
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>
