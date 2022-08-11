@@ -1,15 +1,5 @@
-
-
-
-
-
-<!-- 긁어오기만 한 내용, 수정 필요함 -->
-
-
-
-
 <template>
-  <form @submit.prevent="onSubmit" class="comment-form">
+  <form @submit.prevent="createComment" class="comment-form">
     <label for="comment">comment: </label>
     <input type="text" id="comment" v-model="content" required>
     <button>Comment</button>
@@ -17,21 +7,38 @@
 </template>
 
 <script>
+import axios from 'axios'
+import secosi from "@/api/secosi";
+
 export default {
   name: 'CommentForm',
   data() {
     return {
-      content: ''
+      content: '',
+      articleId: this.$router.currentRoute._value.params.articleid
     }
-  },
-  props: {
-    articleId: Number
   },
   methods: {
-    onSubmit() {
-      this.createComment({ articleId: this.articleId, content: this.content, })
-      this.content = ''
-    }
+    createComment() {
+      const params = new URLSearchParams();
+      params.append('comment', this.content);
+      params.append('article_id', this.articleId);
+      
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+
+      axios.post(secosi.communities.comment(this.articleId), params, config)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      this.$router.push({name:'ArticleDetail', params: {articleid: this.articleId}})
+    },
   },
 }
 </script>
