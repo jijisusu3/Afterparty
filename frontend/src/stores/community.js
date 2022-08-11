@@ -27,24 +27,23 @@ export const useCommunities = defineStore('communities', {
 
       if (genre === '전체') {
         this.articleListName = '전체게시판'
-        searchInfo = '/all'
+        searchInfo = 'all'
         this.articleGenre = 0
         this.articleCategory = 0
       } else if (genre === '공지') {
         this.articleListName = '공지사항'
-        searchInfo = '/1/1'
+        searchInfo = '1/1'
         this.articleGenre = 1
         this.articleCategory = 1
       } else {
         this.articleListName = '' + genre + ' - ' + category
-        searchInfo = '/' + genreMatch[genre] + '/' + genreMatch[category]
+        searchInfo = genreMatch[genre] + '/' + genreMatch[category]
         this.articleGenre = genreMatch[genre]
         this.articleCategory = genreMatch[category]
       }
       axios.get(secosi.communities.search(searchInfo))
       .then(res => {
         this.articleList = res.data
-        console.log(res.data)
       })
       .catch(err => {
         console.log(err)
