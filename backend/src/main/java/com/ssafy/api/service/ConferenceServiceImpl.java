@@ -6,9 +6,13 @@ import com.ssafy.api.response.ConferenceInfoRes;
 import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.api.response.FollowingRes;
 import com.ssafy.db.entity.Conference;
+import com.ssafy.db.entity.Follower;
+import com.ssafy.db.entity.Following;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
+import com.ssafy.db.repository.FollowerRepository;
+import com.ssafy.db.repository.FollowingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +30,12 @@ public class ConferenceServiceImpl implements ConferenceService{
 
     @Autowired
     ConferenceRepositorySupport conferenceRepositorySupport;
+
+    @Autowired
+    FollowerRepository followerRepository;
+
+    @Autowired
+    FollowingRepository followingRepository;
 
     @Override
     public List<ConferenceRes> getRecentConferenceList() {
@@ -122,6 +132,23 @@ public class ConferenceServiceImpl implements ConferenceService{
         ConferenceInfoRes res = ConferenceInfoRes.of(conference);
 
         return res;
+    }
+
+    @Override
+    public Following following(String following_id, String userId) {
+        Following following = new Following();
+        following.setFollowing_id(following_id);
+        following.setUserId(userId);
+        return followingRepository.save(following);
+    }
+
+    @Override
+    public Follower follower(String userId, String follower_id) {
+        Follower follower = new Follower();
+        // 팔로워 테이블에 저장이므로 팔로잉과 반대로 넣어줘야 함. userId = 내 아이디 follower_id = 팔로워 아이디
+        follower.setFollower_id(userId);
+        follower.setUserId(follower_id);
+        return followerRepository.save(follower);
     }
 }
 

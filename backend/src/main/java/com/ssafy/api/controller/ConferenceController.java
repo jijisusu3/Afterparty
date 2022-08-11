@@ -11,9 +11,7 @@ import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -108,6 +106,24 @@ public class ConferenceController {
         ConferenceInfoRes res = conferenceService.getConferenceInfo(conference_id);
 
         return ResponseEntity.status(200).body(res);
+    }
+
+    @PostMapping("/following")
+    @ApiOperation(value = "팔로우 하기", notes = "화상 회의중 팔로우 하기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> following(
+            @RequestParam("followingId") String followingId,
+            @ApiIgnore Authentication authentication) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        User user = userDetails.getUser();
+        System.out.println("=================="+followingId);
+        conferenceService.following(followingId, user.getUserId());
+        conferenceService.follower(user.getUserId(), followingId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
     }
 
 }
