@@ -93,44 +93,10 @@
 
           <div class="tab-pane fade" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
               <h6 class="lh-base fw-medium">지도 API 넣기!!</h6>
+              <div id="map" style="width:500px;height:400px;"></div>
               <ul class="list-unstyled my-4">
                   <li class="list-inline d-flex py-3">
-                      <div>
-                          <a href="javascript:void(0)">
-                              <img class="rounded-circle img-thumbnail" src="http://img.insight.co.kr/static/2018/07/26/700/5r387l930063zu4se350.jpg"
-                                  alt="" />
-                          </a>
-                      </div>
-                      <div class="ps-4">
-                          <h6 class="d-inline-block fs-16 mb-0">John Barrows</h6>
-                          <div class="rating d-inline-block ps-sm-4">
-                              <i class="mdi mdi-star fs-16 text-warning d-inline-block"></i>
-                              <h5 class="d-inline-block fs-16">5.0</h5>
-                          </div>
-                          <p class="text-muted">24th January, 2021</p>
-                          <p class="text-muted fs-16">
-                              API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기
-                          </p>
-                      </div>
-                  </li>
-                  <li class="list-inline d-flex py-3">
-                    <div>
-                        <a href="javascript:void(0)">
-                            <img class="rounded-circle img-thumbnail" src="http://img.insight.co.kr/static/2018/07/26/700/5r387l930063zu4se350.jpg"
-                                alt="" />
-                        </a>
-                    </div>
-                    <div class="ps-4">
-                        <h6 class="d-inline-block fs-16 mb-0">James Marks</h6>
-                        <div class="rating d-inline-block ps-sm-4">
-                            <i class="mdi mdi-star fs-16 text-warning d-inline-block"></i>
-                            <h5 class="d-inline-block fs-16">4.9</h5>
-                        </div>
-                        <p class="text-muted">2nd January, 2021</p>
-                        <p class="text-muted fs-16">
-                            API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기 API에서 불러온 정보 넣기
-                        </p>
-                    </div>
+
                   </li>
               </ul>
           </div>

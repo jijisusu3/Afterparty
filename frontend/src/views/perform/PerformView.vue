@@ -1,46 +1,18 @@
 <template>
-<div class="box">
-  <div class="search-box">
-    <div class="dropdown">
-      <ul>
-        도/시 선택
-        <li>서울시</li>
-        <li>어쩌구</li>
-      </ul>
-      <ul>
-        시/군/구 선택
-        <li>종로구</li>
-        <li>어쩌구</li>
-      </ul>
+<div class="container">
+  <div class="row card-box">
+    <div v-for="perform in performList" :key="perform.mt20id" class="card col-lg-4">
+      <router-link :to="{ name: 'PerformDetail', params: {mt20id: perform.mt20id} }">
+        <img class="card-img-top" :src='`${perform.poster}`' alt="Card image cap">
+        <div class="card-body">
+          <p class="card-title">{{perform.prfnm}}  [{{perform.genrenm}}]</p>
+          <p class="card-date">{{perform.prfpdfrom}} ~ {{perform.prfpdto}}</p>
+          <p class="card-location">{{perform.fcltynm}}</p>
+        </div>
+      </router-link>
     </div>
-    <div class="search-field">
-      <input type="text" name="" id="" placeholder="제목검색">
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </div>
+    <infinite-loading @infinite="load"></infinite-loading>
   </div>
-  <nav>
-    <ul class="nav">
-      <li>전체</li>
-      <li>뮤지컬</li>
-      <li>어쩌구</li>
-      <li>저쩌구</li>
-      <li>어쩌구</li>
-      <li>저쩌구</li>
-    </ul>
-  </nav>
-</div>
-<div class="card">
-  <div v-for="perform in performList" :key="perform.mt20id" class="card" style="width: 18rem;">
-    <router-link :to="{ name: 'PerformDetail', params: {mt20id: perform.mt20id} }">
-      <img class="card-img-top" :src='`${perform.poster}`' alt="Card image cap">
-      <div class="card-body">
-        <p class="card-text">{{perform.prfnm}}  [{{perform.genrenm}}]</p>
-        <p class="card-text">{{perform.prfpdfrom}} ~ {{perform.prfpdto}}</p>
-        <p class="card-text">{{perform.fcltynm}}</p>
-      </div>
-    </router-link>
-  </div>
-  <infinite-loading @infinite="load"></infinite-loading>
 </div>
 </template>
 
@@ -168,16 +140,39 @@ export default defineComponent ({
 })
 </script>
 
-<style lang="scss" scoped>
-.box {
-  border: 3px solid #1b3c33;
-  border-radius: 5px;
+<style scoped>
+.container {
+  padding: 2rem;
 }
-.search-box {
-  display: flex;
+.card-box {
+  margin: 0;
+  justify-content: space-between;
 }
-.dropdown {
-  display: flex;
+.card {
+  margin-bottom: 3rem;
+  padding: 0;
+  width: 200px;
+  height: 372px;
+}
+.card-body {
+  margin: 0;
+  padding: 0.5rem;
+}
+.card-img-top {
+  width: 200px;
+  height: 264px;
+}
+.card-title {
+  font-size: 12px;
+  height: 40px;
+}
+.card-date {
+  font-size: 10px;
+  height: 24px;
+}
+.card-location {
+  font-size: 10px;
+  height: 32px;
 }
 li {
   list-style: none;
@@ -185,5 +180,8 @@ li {
 a {
   text-decoration: none;
   color: black;
+}
+p{
+  margin: 0;
 }
 </style>
