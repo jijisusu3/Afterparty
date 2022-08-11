@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.ConferenceGetReq;
 import com.ssafy.api.request.ConferenceRegistPostReq;
+import com.ssafy.api.request.UserReportPostReq;
 import com.ssafy.api.response.ConferenceInfoRes;
 import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.api.response.FollowingRes;
@@ -11,6 +12,7 @@ import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.UserReport;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,7 @@ public class ConferenceController {
 
     @Autowired
     UserService userService;
+
 
     @GetMapping("")
     @ApiOperation(value = "화상회의 전체 목록 조회", notes = "전체 화상회의 목록을 가져온다. ")
@@ -119,11 +122,25 @@ public class ConferenceController {
             @ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
-        System.out.println("=================="+followingId);
         conferenceService.following(followingId, user.getUserId());
         conferenceService.follower(user.getUserId(), followingId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
+    }
+
+    @PostMapping("/report")
+    @ApiOperation(value = "신고하기", notes = "화상 회의중 유저 신고하기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> report(
+            @RequestBody @ApiParam(value = "유저 신고 정보", required = true) UserReportPostReq userReportInfo,
+            @ApiIgnore Authentication authentication) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        User user = userDetails.getUser();
+        conferenceService.report(user, userReportInfo.getReportUserId(), userReportInfo.getReportContent());
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
 }

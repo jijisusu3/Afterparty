@@ -5,14 +5,8 @@ import com.ssafy.api.request.ConferenceRegistPostReq;
 import com.ssafy.api.response.ConferenceInfoRes;
 import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.api.response.FollowingRes;
-import com.ssafy.db.entity.Conference;
-import com.ssafy.db.entity.Follower;
-import com.ssafy.db.entity.Following;
-import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.ConferenceRepository;
-import com.ssafy.db.repository.ConferenceRepositorySupport;
-import com.ssafy.db.repository.FollowerRepository;
-import com.ssafy.db.repository.FollowingRepository;
+import com.ssafy.db.entity.*;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +30,9 @@ public class ConferenceServiceImpl implements ConferenceService{
 
     @Autowired
     FollowingRepository followingRepository;
+
+    @Autowired
+    UserReportRepository userReportRepository;
 
     @Override
     public List<ConferenceRes> getRecentConferenceList() {
@@ -149,6 +146,16 @@ public class ConferenceServiceImpl implements ConferenceService{
         follower.setFollower_id(userId);
         follower.setUserId(follower_id);
         return followerRepository.save(follower);
+    }
+
+    @Override
+    public UserReport report(User userInfo, String reportUserId, String reportContent) {
+        UserReport userReport = new UserReport();
+        userReport.setUser_id(userInfo.getUserId());
+        userReport.setReport_user_id(reportUserId);
+        userReport.setReport_content(reportContent);
+        userReport.setUser(userInfo);
+        return userReportRepository.save(userReport);
     }
 }
 
