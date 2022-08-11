@@ -16,9 +16,7 @@
 
       <hr>
       <p>댓글목록</p>
-      <!-- 댓글 목록 컴포넌트 -->
       <CommentList />
-      <!-- 댓글 작성 컴포넌트 -->
       <CommentForm />
     </div>
   </div>
@@ -57,8 +55,6 @@ export default {
       .then(res => {
         this.title = res.data.article_title
         this.content = res.data.article_content
-        console.log(res.data)
-        console.log(this.currentUser)
       })
   }
 };
