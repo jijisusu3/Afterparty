@@ -8,12 +8,19 @@ export const useCommunities = defineStore('communities', {
     articleList: [],
     articleGenre: 0,
     articleCategory: 0,
+    commentList: [],
+    commentListRerendering: 0,
+    genre: '',
+    category: '',
   }),
   getters: {
 
   },
   actions: {
     searchArticles(genre, category) {
+      this.genre = genre
+      this.category = category
+
       let searchInfo = ''
       const genreMatch = {
         '자유게시판': 0,
@@ -46,9 +53,17 @@ export const useCommunities = defineStore('communities', {
         this.articleList = res.data
       })
       .catch(err => {
-        console.log(err)
       })
     },
+    searchComments(articleId) {
+      axios.get(secosi.communities.comment(articleId))
+      .then(res => {
+        this.commentList = res.data
+        console.log(this.commentList)
+      })
+      .catch(err => {
+      })
+    }
   }
 })
 

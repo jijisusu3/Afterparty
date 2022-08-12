@@ -9,6 +9,8 @@
 <script>
 import axios from 'axios'
 import secosi from "@/api/secosi";
+import { mapActions } from 'pinia';
+import { useCommunities } from '@/stores/community'
 
 export default {
   name: 'CommentForm',
@@ -19,6 +21,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useCommunities, ['searchComments']),
     createComment() {
       const params = new URLSearchParams();
       params.append('comment', this.content);
@@ -29,15 +32,14 @@ export default {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       }
-
       axios.post(secosi.communities.comment(this.articleId), params, config)
       .then(res => {
-        console.log(res)
+        this.content = ''
+        this.searchComments(this.articleId)
       })
       .catch(err => {
         console.log(err)
       })
-      this.$router.push({name:'ArticleDetail', params: {articleid: this.articleId}})
     },
   },
 }

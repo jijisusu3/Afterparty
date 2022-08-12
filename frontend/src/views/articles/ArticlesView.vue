@@ -29,7 +29,7 @@ export default {
   created() {
   },
   computed: {
-    ...mapState(useAccounts, ['isLoggedIn'])
+    ...mapState(useAccounts, ['isLoggedIn', 'currentUser'])
   },
   methods: {
   },
