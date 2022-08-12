@@ -2,6 +2,7 @@ const HOST = "http://localhost:8080/api/"
 const ACCOUNTS = "users"
 const COMMUNITIES = "communities"
 const PERFORMS = 'performs/'
+const CONFERENCES = "conferences"
 
 export default {
   accounts: {
@@ -19,6 +20,10 @@ export default {
   },
   performs: {
     performs: () => HOST + PERFORMS,
+    guguns: () => HOST + PERFORMS + 'guguns',
     perform: mt20id => HOST + PERFORMS + `${mt20id}`,
   },
+  conferences: {
+    search: () => HOST + CONFERENCES + '/search'
+  }
 }
