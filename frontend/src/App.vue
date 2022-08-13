@@ -28,7 +28,7 @@ import LoginView from '@/views/accounts/LoginView.vue'
 import SignupView from '@/views/accounts/SignupView.vue'
 import { useAccounts } from "@/stores/accounts"
 import { useCommunities } from '@/stores/community'
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 
 export default{
   name:'App',
@@ -44,12 +44,16 @@ export default{
   },
   created() {
     this.fetchCurrentUser()
+    this.searchArticles(this.genre, this.community)
   },
   setup(){
     const isLogin = useAccounts()
     return {
       isLogin
     }
+  },
+  computed: {
+    ...mapState(useCommunities, ['genre', 'community'])
   },
   methods: {
     ...mapActions(useCommunities, ['searchArticles']),
