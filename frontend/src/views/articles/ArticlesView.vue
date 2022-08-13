@@ -2,10 +2,10 @@
   <div class="Community row">
     <ArticleNavComponent></ArticleNavComponent>
     <ArticleListComponent></ArticleListComponent>
-
     <div class="d-flex justify-content-end button-div">
+      <SearchComponent></SearchComponent>
       <router-link to="/articles/create" class="">
-        <button v-show="this.isLoggedIn" type="button" class="btn btn-primary">새글 쓰기</button>
+        <button v-show="this.isLoggedIn" type="button" class="btn">글쓰기</button>
       </router-link>
     </div>
   </div>
@@ -16,6 +16,7 @@ import { mapState } from 'pinia'
 import { useAccounts } from "@/stores/accounts";
 import ArticleListComponent from '@/views/articles/components/ArticleListComponent.vue'
 import ArticleNavComponent from '@/views/articles/components/ArticleNavComponent.vue'
+import SearchComponent from '@/views/articles/components/SearchComponent.vue'
 
 export default {
   data() {
@@ -36,9 +37,17 @@ export default {
   components: {
     ArticleListComponent,
     ArticleNavComponent,
+    SearchComponent,
   },
 };
 </script>
 
 <style scoped>
+.btn {
+  background-color: #1B3C33;
+  color: #FAFAFA;
+  width: 96px;
+  height: 32px;
+  font-size: 16px;
+}
 </style>

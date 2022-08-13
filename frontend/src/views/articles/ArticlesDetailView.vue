@@ -17,9 +17,9 @@
         <button @click="articleDelete">삭제</button>
       </div>
       <hr>
+      <CommentForm />
       <p>댓글목록</p>
       <CommentList />
-      <CommentForm />
     </div>
   </div>
 </template>
