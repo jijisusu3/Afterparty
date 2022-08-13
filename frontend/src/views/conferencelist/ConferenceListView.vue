@@ -43,23 +43,46 @@
     </ul>
   </nav>
   <button @click="showCreateModal" class="log main-btn" style="margin-left:504px">방만들기</button>
-  <div class="conference-list">
-    <router-link to="/conference/1/" class="list-group-item list-group-item-action py-2 ripple">
-      <span>방입장</span>
-    </router-link>  
-    <router-link to="/conference/2/" class="list-group-item list-group-item-action py-2 ripple">
-      <span>방입장</span>
-    </router-link>  
-    <router-link to="/conference/3/" class="list-group-item list-group-item-action py-2 ripple">
-      <span>방입장</span>
-    </router-link>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="card-col">
+      <div class="card-box" v-for="conference in conferenceList" :key="conference.conference_id">
+        <figure class="conf-card">
+          <img class="conf-img" src="@/assets/conference.png" alt="sample99" />
+          <figcaption>
+            <h3 v-if="conference._after">관람자만</h3>
+            <h3 v-else>모두참여</h3>
+            <div><button class="conf-in">입장하기</button></div>
+          </figcaption>
+        </figure>
+        <div class="text-box">
+          <p class="card-text">방 제목: {{conference.title}}</p>
+          <p class="card-text">공연이름: {{conference.prfnm}}</p>
+          <p class="card-text">공연일시: {{conference.perform_day}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<!-- 
+<div class="conference-list">
+  <router-link to="/conference/1/" class="list-group-item list-group-item-action py-2 ripple">
+    <span>방입장</span>
+  </router-link>  
+  <router-link to="/conference/2/" class="list-group-item list-group-item-action py-2 ripple">
+    <span>방입장</span>
+  </router-link>  
+  <router-link to="/conference/3/" class="list-group-item list-group-item-action py-2 ripple">
+    <span>방입장</span>
+  </router-link>
+</div> -->
 <conference-create v-show="isRoomCreateVisible" @createClose="closeCreateModal"></conference-create>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from "vue"
 import secosi from "@/api/secosi"
 import axios from "axios"
 import ConferenceCreate from '@/views/conferencecreate/ConferenceCreateView.vue'
@@ -67,7 +90,7 @@ import ConferenceCreate from '@/views/conferencecreate/ConferenceCreateView.vue'
 export default defineComponent ({
   name: 'ConferenceListView',
   components:{ 
-    ConferenceCreate
+    ConferenceCreate,
   },
   data() {
     return {
@@ -129,7 +152,7 @@ export default defineComponent ({
           console.error(err.response.data)
         })
     },
-    fetchConferences( searchInfo ){
+    searchConferences( searchInfo ){
       axios.post(secosi.conferences.search(), searchInfo)
         .then(res => {
           this.conferenceList = res.data
@@ -138,7 +161,19 @@ export default defineComponent ({
         .catch(err => {
           console.error(err.response.data)
         })
-    }
+    },
+    fetchConferences() {
+      axios.get(secosi.conferences.conferences())
+        .then(res => {
+          console.log('-------------------');
+          this.conferenceList = res.data
+          console.log(res.data)
+          console.log(this.conferenceList)
+        })
+    },
+  },
+  created() {
+    this.fetchConferences()
   },
   setup() {
     const sidoClick = function sidoClick(sido){
@@ -165,11 +200,11 @@ export default defineComponent ({
     const searchSubmit = function searchSubmit() {
       this.searchInfo.genrenm= "ALL"
       this.searchInfo.search_word = this.searchText
-      this.fetchConferences(this.searchInfo)
+      this.searchConferences(this.searchInfo)
     }
     const genreClick = function genreClick(genre) {
       this.searchInfo.genre = genre
-      this.fetchConferences(this.searchInfo)
+      this.searchConferences(this.searchInfo)
     }
     const searchTypeClick = function searchTypeClick(type) {
       this.searchInfo.type = type
@@ -198,11 +233,12 @@ export default defineComponent ({
       searchTypeClick,
       isAfterClick
     }
-  }
+  },
 })
 </script>
 
 <style scoped>
+ @import url(https://fonts.googleapis.com/css?family=Montserrat:200);
 *{
   margin: 0;
   padding: 0;
@@ -342,7 +378,7 @@ body{
 nav {
   position: absolute;
   margin: 0px;
-  background: #f9f9f9;
+  background: #ffffff;
   padding-left: 24px;
   top: 120px;
   /* left: 25%; */
@@ -364,7 +400,6 @@ nav .menuItems li p{
   position: relative;
   text-transform: uppercase;
   z-index: 0;
-
 }
 nav .menuItems li p:hover{
   text-decoration: none;
@@ -383,7 +418,7 @@ nav .menuItems li ::before{
   background-color: #1B3C33;
   color:white;
   position: absolute;
-  margin: 0px;
+  margin: 0;
   top: 0;
   bottom: 0;
   left: 0;
@@ -391,6 +426,8 @@ nav .menuItems li ::before{
   width: 0;
   overflow: hidden; 
   z-index: -1;
+  border: none;
+  border-radius: 5px;
 }
 nav .menuItems li :hover::before{
   width: 100%;
@@ -454,5 +491,141 @@ label::before {
   -webkit-transition: .25s all ease;
   -o-transition: .25s all ease;
   transition: .25s all ease;
+}
+.container {
+  position: absolute;
+  top: 24rem;
+}
+.conf-card {
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  width: 240px;
+  /* background-color: #ffffff; */
+  color: #1B3C33;
+  text-align: left;
+  font-size: 16px;
+  /* border-radius: 5px 5px 0 0; */
+  border-bottom: 1px solid black;
+}
+.conf-card *,
+.conf-card:before,
+.conf-card:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.conf-card img {
+  max-width: 100%;
+  backface-visibility: hidden;
+  vertical-align: top;
+}
+.conf-card:before,
+.conf-card:after {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  content: '';
+  background-color: #fff;
+  z-index: 1;
+  opacity: 0;
+}
+.conf-card:before {
+  width: 0;
+  height: 1px;
+}
+.conf-card:after {
+  height: 0;
+  width: 1px;
+}
+.conf-card figcaption {
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  padding: 15px 20px;
+}
+.conf-card h3,
+.conf-card div {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0;
+}
+.conf-card a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+.conf-card:hover img,
+.conf-card.hover img {
+  zoom: 1;
+  filter: alpha(opacity=20);
+  -webkit-opacity: 0.2;
+  opacity: 0.2;
+}
+.conf-card:hover:before,
+.conf-card.hover:before,
+.conf-card:hover:after,
+.conf-card.hover:after {
+  opacity: 1;
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+}
+.conf-card:hover:before,
+.conf-card.hover:before {
+  width: 40px;
+}
+.conf-card:hover:after,
+.conf-card.hover:after {
+  height: 40px;
+}
+.conf-card:hover h3,
+.conf-card.hover h3,
+.conf-card:hover div,
+.conf-card.hover div {
+  opacity: 1;
+}
+.conf-card:hover h3,
+.conf-card.hover h3
+.conf-card:hover div,
+.conf-card.hover div {
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+.conf-img {
+  width: 200px;
+  height: 136px;
+  /* background-color: #ffffff; */
+}
+.conf-in {
+  background-color: #1B3C33;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+}
+.card-col {
+  column-count: 4;
+  width: 1080px;
+}
+.card-box {
+  width: 240px;
+  margin: 0 0 2rem 0;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.text-box {
+  height: 72px;
+  margin: 0.5rem 1rem 0;
+}
+.card-text {
+  overflow: hidden;
+  height: 20px;
+  font-size: 12px;
 }
 </style>
