@@ -1,4 +1,5 @@
 const HOST = "http://localhost:8080/api/"
+// const HOST = "https://i7b303.p.ssafy.io/api/"
 const ACCOUNTS = "users"
 const COMMUNITIES = "communities"
 const PERFORMS = 'performs/'
@@ -15,8 +16,15 @@ export default {
   },
   communities: {
     community: () => HOST + COMMUNITIES,
-    search: searchInfo => HOST + COMMUNITIES + `${searchInfo}`,
+    search: searchInfo => HOST + COMMUNITIES + `/${searchInfo}`,
     articleDetail: articleId => HOST + COMMUNITIES + `/${articleId}`,
+    articleUpdate: articleId => HOST + COMMUNITIES + `/${articleId}`,
+    comment: articleId => HOST + COMMUNITIES + `/${articleId}` + '/comments',
+    commentEdit: (articleId, commentId) => HOST + COMMUNITIES + `/${articleId}` + '/comments' + `/${commentId}`,
+    viewCount: articleId => HOST + COMMUNITIES + `/${articleId}` + '/count',
+    articleDelete: (articleId) => HOST + COMMUNITIES + `/${articleId}`,
+    commentDelete: (articleId, commentId) => HOST + COMMUNITIES + `/${articleId}` + '/comments' + `/${commentId}`,
+    articleSearch: (articleGenre, articleCategory, searchCategory, searchWord) => HOST + COMMUNITIES + `/${articleGenre}` + `/${articleCategory}` + `/${searchCategory}` + `/${searchWord}`,
   },
   performs: {
     performs: () => HOST + PERFORMS,
@@ -24,6 +32,7 @@ export default {
     perform: mt20id => HOST + PERFORMS + `${mt20id}`,
   },
   conferences: {
-    search: () => HOST + CONFERENCES + '/search'
-  }
+    conferences: () => HOST + CONFERENCES,
+    search: () => HOST + CONFERENCES + '/search',
+  },
 }
