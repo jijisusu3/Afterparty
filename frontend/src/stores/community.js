@@ -10,8 +10,8 @@ export const useCommunities = defineStore('communities', {
     articleCategory: 0,
     commentList: [],
     commentListRerendering: 0,
-    genre: '',
-    category: '',
+    genre: '전체',
+    category: '전체',
   }),
   getters: {
 
