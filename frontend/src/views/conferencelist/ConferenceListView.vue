@@ -42,7 +42,10 @@
       <li @click="genreClick(genre)" v-for="(genre, index) in genreList" :key="index"><p>{{genre}}</p></li>
     </ul>
   </nav>
-  <button @click="showCreateModal" class="log main-btn" style="margin-left:504px">방만들기</button>
+  <div class="row nav-btn" style="margin-left:504px">
+    <button @click="showFollow" class="log main-btn">내팔로잉</button>
+    <button @click="showCreateModal" class="log main-btn">방만들기</button>
+  </div>
 </div>
 
 <div class="container">
@@ -83,6 +86,8 @@
 
 <script>
 import { defineComponent } from "vue"
+import { mapState } from 'pinia'
+import { useAccounts } from "@/stores/accounts";
 import secosi from "@/api/secosi"
 import axios from "axios"
 import ConferenceCreate from '@/views/conferencecreate/ConferenceCreateView.vue'
@@ -156,7 +161,6 @@ export default defineComponent ({
       axios.post(secosi.conferences.search(), searchInfo)
         .then(res => {
           this.conferenceList = res.data
-          console.log(res.data)
         })
         .catch(err => {
           console.error(err.response.data)
@@ -165,15 +169,26 @@ export default defineComponent ({
     fetchConferences() {
       axios.get(secosi.conferences.conferences())
         .then(res => {
-          console.log('-------------------');
           this.conferenceList = res.data
-          console.log(res.data)
-          console.log(this.conferenceList)
         })
     },
+    followConferences() {
+      const context = {
+        "userId" : this.currentUser.userId,
+      }
+      console.log(this.currentUser.userId);
+      axios.get(secosi.conferences.follow(), context)
+        .then(res => {
+          this.conferenceList = res.data
+          console.log('------------------------');
+        })
+    }
   },
   created() {
     this.fetchConferences()
+  },
+  computed: {
+    ...mapState(useAccounts, ['currentUser'])
   },
   setup() {
     const sidoClick = function sidoClick(sido){
@@ -195,7 +210,6 @@ export default defineComponent ({
       this.searchInfo.sigungu = gugun
       const defaultGugun = document.querySelector('.gugun-default-option')
       defaultGugun.innerText = gugun
-      console.log(this.searchInfo)
     }
     const searchSubmit = function searchSubmit() {
       this.searchInfo.genrenm= "ALL"
@@ -225,13 +239,17 @@ export default defineComponent ({
       }
       this.searchInfo.is_after = isAfter
     }
+    const showFollow = function showFollow() {
+      this.followConferences()
+    }
     return {
       sidoClick,
       gugunClick,
       searchSubmit,
       genreClick,
       searchTypeClick,
-      isAfterClick
+      isAfterClick,
+      showFollow,
     }
   },
 })
@@ -628,4 +646,7 @@ label::before {
   height: 20px;
   font-size: 12px;
 }
+/* .nav-btn {
+  width: 100px;
+} */
 </style>
