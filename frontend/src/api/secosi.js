@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-const HOST = "https://i7b303.p.ssafy.io/api/"
-// const HOST = "http://localhost:8080/api"
-=======
 const HOST = "http://localhost:8080/api/"
-// const HOST = "https://i7b303.p.ssafy.io/api/"
->>>>>>> 45e50df21c4ea6e918272167759fb754d1ab2cf1
 const ACCOUNTS = "users"
 const COMMUNITIES = "communities"
 const PERFORMS = 'performs'
@@ -27,6 +21,7 @@ export default {
     comment: articleId => HOST + COMMUNITIES + `/${articleId}` + '/comments',
     commentEdit: (articleId, commentId) => HOST + COMMUNITIES + `/${articleId}` + '/comments' + `/${commentId}`,
     viewCount: articleId => HOST + COMMUNITIES + `/${articleId}` + '/count',
+    like: articleId => HOST + COMMUNITIES + `/${articleId}` + '/like',
     articleDelete: (articleId) => HOST + COMMUNITIES + `/${articleId}`,
     commentDelete: (articleId, commentId) => HOST + COMMUNITIES + `/${articleId}` + '/comments' + `/${commentId}`,
     articleSearch: (articleGenre, articleCategory, searchCategory, searchWord) => HOST + COMMUNITIES + `/${articleGenre}` + `/${articleCategory}` + `/${searchCategory}` + `/${searchWord}`,
