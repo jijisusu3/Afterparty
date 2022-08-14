@@ -1,4 +1,19 @@
+<<<<<<< HEAD
 const HOST = "http://localhost:8080/api/"
+=======
+<<<<<<< HEAD
+const HOST = "https://i7b303.p.ssafy.io/api/"
+// const HOST = "http://localhost:8080/api/"
+=======
+<<<<<<< HEAD
+const HOST = "https://i7b303.p.ssafy.io/api/"
+// const HOST = "http://localhost:8080/api"
+=======
+const HOST = "http://localhost:8080/api/"
+// const HOST = "https://i7b303.p.ssafy.io/api/"
+>>>>>>> 45e50df21c4ea6e918272167759fb754d1ab2cf1
+>>>>>>> 4919ad605eb38b9d817c0e40b5d2abcdfd8a3d2c
+>>>>>>> a45fb2d9fc86eb474c3c92ebcd2ffd11bfe7288d
 const ACCOUNTS = "users"
 const COMMUNITIES = "communities"
 const PERFORMS = 'performs'
