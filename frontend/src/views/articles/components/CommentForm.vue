@@ -1,8 +1,10 @@
 <template>
   <form @submit.prevent="createComment" class="comment-form">
-    <label for="comment">comment: </label>
-    <input type="text" id="comment" v-model="content" required>
-    <button>Comment</button>
+    <label for="comment" ></label>
+    <div class="comment-form">
+      <input type="text" id="comment" class="form-control" v-model="content" required>
+      <button class="btn-style">댓글작성</button>
+    </div>
   </form>
 </template>
 
@@ -44,5 +46,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.comment-form {
+  display: flex;
+}
 </style>
