@@ -48,7 +48,8 @@ public class CommunityController {
          */
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userDetails.getUser();
-
+        String content_br = communityRegisterInfo.getArticle_content().replace("\n","<br>");
+        communityRegisterInfo.setArticle_content(content_br);
         Community community = communityService.createArticle(user, communityRegisterInfo);
 
         return ResponseEntity.status(200).body(community.getArticle_id());
