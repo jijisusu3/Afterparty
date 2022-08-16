@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3 class="text-center">내 댓글</h3>
     <div class="scroll-box">
       <ul v-for="(comment, index) in myCommentList" :key="index">
         <li>
