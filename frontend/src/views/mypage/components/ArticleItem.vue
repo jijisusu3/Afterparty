@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3 class="text-center">내가 쓴 글</h3>
     <div class="scroll-box">
       <ul v-for="article in myArticleList" :key="article.article_id">
         <li>
