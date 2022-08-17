@@ -2,7 +2,7 @@
   <div>
     <div class="scroll-box">
       <ul v-for="article in myArticleList" :key="article.article_id">
-        <li>
+        <li class="article-list">
           <router-link @click="viewCount(article.article_id)" class="article-list-item"
             :to="{ name: 'ArticleDetail', params: { articleid: article.article_id } }">
             {{ article.article_title }}
@@ -44,6 +44,10 @@ export default {
   overflow: scroll;
   width: 420px;
   height: 440px;
+}
+.article-list {
+  list-style: none;
+  margin: 20px 0px 0px 0px;
 }
 .article-list-item {
   text-decoration: none;
