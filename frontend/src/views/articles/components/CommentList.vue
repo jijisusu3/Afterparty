@@ -1,8 +1,8 @@
 <template>
   <router-view :key="this.commentList">
-    <ul class='list-group list-group-flush' v-for="comment in this.commentList" :key="comment.comment_id">
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <p v-if="this.editNum!=comment.comment_id">{{ comment.comment_content }}</p>
+    <ul class='ul-style list-group list-group-flush' v-for="comment in this.commentList" :key="comment.comment_id">
+      <li class="list-group-item li-style">
+        <p class="comment-style" v-if="this.editNum!=comment.comment_id">{{ comment.comment_content }}</p>
         <input v-else type="text" id="comment" v-model="content" required>
         <div v-show="this.currentUser.name===comment.user.name">
           <button v-if="this.editNum!=comment.comment_id" @click="commentEditSetup(comment)" class="btn-style">수정</button>
@@ -81,8 +81,18 @@ export default {
 </script>
 
 <style>
+.li-style {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FAFAFA;
+}
+.comment-style {
+  margin: 0;
+}
 .btn-style {
-  font-size: 18px;
+  font-size: 10px;
   font-weight: bold;
   border-radius: 4px;
   margin-left: 10px;
