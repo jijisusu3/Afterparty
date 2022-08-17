@@ -238,6 +238,17 @@ export default defineComponent ({
   width: 80%;
   text-align: center;
 }
+@media screen and (max-width: 1900px) {
+  .modal-content-left{
+    display: none;
+  }
+  .modal-content {
+    grid-template-columns: auto;
+    margin: 15% auto;
+    width: 30%;
+    height: 55%;
+  }
+}
 @media screen and (max-width: 820px) {
   .modal-content-left{
     display: none;
@@ -245,15 +256,19 @@ export default defineComponent ({
   .modal-content {
     grid-template-columns: auto;
     margin: 15% auto;
-    width: 70%;
-    height: 75%;
+    width: 60%;
+    height: 55%;
   }
 }
 @media screen and (max-width: 600px) {
+  .modal-content-left{
+    display: none;
+  }
   .modal-content {
+    grid-template-columns: auto;
     margin: 20% auto;
     width: 90%;
-    height: 80%;
+    height: 55%;
   }
 }
 </style>
