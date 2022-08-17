@@ -11,8 +11,7 @@
         <div class="place-right">
           <p>{{ this.article.regtime.slice(0, 16) }}</p>
         </div>
-        <p v-html="article.article_content"></p>
-        <!-- <p>{{ this.article.article_content }}</p> -->
+        <p class="article-content-box" v-html="article.article_content"></p>
         <div v-show="this.currentUser.name === this.article.user.name">
           <button class="btn-style" @click.prevent="likeArticle">추천</button>
           <router-link :to="{
@@ -95,6 +94,9 @@ export default {
 </script>
 
 <style>
+.article-content-box {
+  height: 400px;
+}
 .text-area {
   width: 800px;
   height: 600px;
