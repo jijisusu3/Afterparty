@@ -162,7 +162,7 @@ public class OpenviduController {
 
                     // Update our collection storing the new token
                     this.mapSessionNamesTokens.get(sessionName).put(token, role);
-                    
+
                     //참가를 했으면 화상회의방 person_now 값을 size로 update 해주기
                     conferenceRepositorySupport.updatePersonNow(conference, this.mapSessionNamesTokens.get(sessionName).size());
 
