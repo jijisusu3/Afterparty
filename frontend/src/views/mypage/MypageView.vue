@@ -178,7 +178,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useAccounts, ['currentUser']),
+    ...mapState(useAccounts, ['currentUser', 'isLoggedIn']),
   },
   components: {
     ArticleItem,
