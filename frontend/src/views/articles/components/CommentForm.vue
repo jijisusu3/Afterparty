@@ -3,7 +3,7 @@
     <label for="comment" ></label>
     <div class="comment-form">
       <input type="text" id="comment" class="form-control" v-model="content" required>
-      <button class="btn-style">댓글작성</button>
+      <button class="btn-style">작성</button>
     </div>
   </form>
 </template>
@@ -49,5 +49,20 @@ export default {
 <style scoped>
 .comment-form {
   display: flex;
+  width: 880px;
+  padding: 0px 8px 0px;
+  margin-top: 16px;
+}
+.btn-style {
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-left: 8px;
+  padding: 0px;
+  width: 96px;
+  height: 36px;
+  border: 0;
+  color: #FFFFFF;
+  background-color: #1B3C33;
 }
 </style>
