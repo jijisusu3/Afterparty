@@ -2,16 +2,17 @@
   <div>
     <div class="profile-big-box">
       <div class="profile-small-box">
-        <div class="profile-image-box">
-          <!-- <img v-if="profilePhoto" src="" alt=""> -->
-          <img @click="ShowProfileImageComponent" class="profile-image" src="@/assets/account/15.png">
+        <div @click="ShowProfileImageComponent" class="profile-image-box" :key="`${this.currentUser.profile_img}`">
+          <img v-if="this.currentUser.profile_img" @click="ShowProfileImageComponent" class="profile-image" :src="`./../src/assets/account/${this.currentUser.profile_img}.png`">
         </div>
         <div class="profile-detail">
           <div class="profile-detail-username">
-            <p>{{ this.username }}</p>
+            <input v-if="this.isEdit" v-model="newUsername" @keyup="usernameValid" type="text" class="modal-input" id="newUsername" name="newUsername" :placeholder="this.currentUser.name">
+            <p class="username-style" v-else :key="this.currentUser.name">닉네임 : {{ this.currentUser.name }}</p>
           </div>
           <div class="profile-detail-aboutme">
-            <p>{{ this.about_me }}</p>
+            <input v-if="this.isEdit" v-model="newAboutMe" type="text" class="modal-input" id="newAboutMe" name="newAboutMe" :placeholder="this.currentUser.about_me">
+            <p v-else>한 줄 소개 : {{ this.currentUser.about_me }}</p>
           </div>
           <div class="profile-detail-follow">
             <button @click="getFollowings">팔로잉</button>
@@ -21,9 +22,12 @@
           </div>
           <div class="profile-detail-setting">
             <button>설정</button>
-            <button @click="DeleteAccount">프로필수정</button>
+            <button v-if="!this.isEdit" @click="editProfileOn">프로필수정</button>
+            <button v-if="this.isEdit" @click="editProfile(), editProfileOff()">수정</button>
+            <button v-if="this.isEdit" @click="editProfileOff">취소</button>
             <button @click="ShowPasswordChangeModal">비밀번호 변경</button>
             <button @click="DeleteAccount">회원탈퇴</button>
+            <button @click="Unfollow">언팔로우</button>
           </div>
         </div>
       </div>
@@ -31,7 +35,7 @@
     <div class="nav-line"></div>
     <div class="mytext-box">
       <div>
-        <h3 class="text-center">내가 쓴 글</h3>
+        <h3 class="text-center">나의 게시글</h3>
         <div class="my-article-box">
           <article-item></article-item>
         </div>
@@ -39,7 +43,7 @@
       <!-- <hr class="verticle-line"> -->
       <div class="verticle-line"></div>
       <div>
-        <h3 class="text-center">내 댓글</h3>
+        <h3 class="text-center">나의 댓글</h3>
         <div class="my-comment-box">
           <comment-item></comment-item>
         </div>
@@ -68,22 +72,47 @@ export default {
     return {
       isPasswordChangeViewVisible: false,
       isProfileImageComponentVisible: false,
-      username: '',
-      about_me: '',
       userId: '',
       profilePhoto: '',
+      isEdit: false,
+      newUsername: '',
+      newAboutMe: '',
     }
   },
   methods: {
-    ...mapActions(useAccounts, ['removeToken']),
+    ...mapActions(useAccounts, ['removeToken', 'fetchCurrentUser']),
+    editProfile() {
+      const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      const context = {
+        "aboutMe": this.newAboutMe,
+        "profileImg": this.currentUser.profile_img,
+        "userEmail": this.currentUser.email,
+        "userName": this.newUsername,
+      }
+      axios.patch(secosi.mypages.editProfile(this.currentUser.userId), context, config)
+      .then(res => {
+        this.fetchCurrentUser()
+      })
+      .catch(err => {
+      })
+    },
     getFollowers() {
       axios.get(secosi.mypages.myFollowers(this.userId))
       .then(res => {
         console.log(res.data)
-        console.log(this.currentUser)
       })
       .catch(err => {
       })
+    },
+    editProfileOn() {
+      this.isEdit = true
+    },
+    editProfileOff() {
+      this.isEdit = false
     },
     getFollowings() {
       axios.get(secosi.mypages.myFollowings(this.userId))
@@ -113,6 +142,39 @@ export default {
       .catch(err => {
       })
     },
+    Unfollow() {
+      const params = new URLSearchParams();
+      params.append('unfollowingId', 'rkd9755');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+      console.log(config)
+
+      // axios.delete(secosi.conferences.unfollow(), {params: {'unfollowingId' : 'rkd9755',}}, config)
+      // .then(res => {
+      //   console.log('complete')
+      // })
+      // .catch(err => {
+      // })
+
+      axios
+      .delete(secosi.conferences.unfollow(), {
+        params: {
+          'unfollowingId': 'rkd9755',
+          'userId': this.currentUser.userId,
+        }
+      }, {
+        headers: {
+          Authorization: "Bearer ${token}",
+          token: localStorage.getItem("token")
+        }
+      })
+      .then(res => {
+        console.log(res);
+      });
+    },
   },
   computed: {
     ...mapState(useAccounts, ['currentUser']),
@@ -125,7 +187,7 @@ export default {
   },
   created() {
     this.username = this.currentUser.name
-    this.about_me = this.currentUser.about_me || '-'
+    this.aboutMe = this.currentUser.aboutMe || '-'
     this.userId = this.currentUser.userId
     console.log(this.currentUser)
   }
@@ -133,12 +195,16 @@ export default {
 </script>
 
 <style scoped>
+.username-style {
+  font-weight: bold;
+  font-size: 16px;
+}
 .profile-image {
   width: 120px;
   height: 120px;
 }
 .verticle-line {
-  border: 1px dashed;
+  border-left: 1px dashed;
   border-color: #1B3C33;
 }
 .nav-line{
