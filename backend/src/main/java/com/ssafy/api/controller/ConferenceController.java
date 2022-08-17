@@ -43,7 +43,7 @@ public class ConferenceController {
     @ApiOperation(value = "화상회의 전체 목록 조회", notes = "전체 화상회의 목록을 가져온다. ")
     public ResponseEntity<List<ConferenceRes>> getConferenceAllList() {
 
-       List<ConferenceRes> res = conferenceService.getConferenceAllList();
+        List<ConferenceRes> res = conferenceService.getConferenceAllList();
 
         return ResponseEntity.status(200).body(res);
     }
@@ -190,8 +190,21 @@ public class ConferenceController {
             @RequestParam @ApiParam(value = "현재 인원 수", required = true) int person_now) {
 
         Conference conference = conferenceService.updatePersonNowOut(conference_id, person_now);
-        
+
         if(conference == null) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not exists Conference"));
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @DeleteMapping("/chat/{conference_id}")
+    @ApiOperation(value = "화상회의 방 삭제", notes = "<strong>회의실 ID</strong>를 입력받아 화상회의 방을 삭제한다. ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteConference(
+            @PathVariable long conference_id) {
+        conferenceService.deleteConference(conference_id);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
