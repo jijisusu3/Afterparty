@@ -2,7 +2,7 @@
   <div>
     <div class="scroll-box">
       <ul v-for="(comment, index) in myCommentList" :key="index">
-        <li>
+        <li class="comment-list">
           <router-link @click="viewCount(article.article_id)" class="comment-list-item"
             :to="{ name: 'ArticleDetail', params: { articleid: comment.article_id } }">
             {{ comment.comment_content }}
@@ -42,6 +42,10 @@ export default {
   overflow: scroll;
   width: 420px;
   height: 440px;
+}
+.comment-list {
+  list-style: none;
+  margin: 20px 0px 0px 0px;
 }
 .comment-list-item {
   text-decoration: none;
