@@ -78,7 +78,7 @@
                     <img class="info-img" :src='`${url}`' alt="info img">
                   </span>
                 </div>
-                <div class="text-info">{{performInfo.sty}}</div>
+                <div class="text-info" v-html="styt"></div>
             </div>
           </div>
 
@@ -110,32 +110,67 @@ export default {
       mt20id: this.$route.params.mt20id,
       performInfo: {},
       styurl: {},
+      styt: '',
+      lainfo: '',
+      loinfo: '',
     }
   },
   methods: {
+    kakaoMapTest(){
+      console.log('testtest')
+      if(window.kakao && window.kakao.maps) {
+        console.log('이건 이프 안')
+        this.initMap()
+      } else {
+        console.log('이건 엘스 안')
+        const script = document.createElement('script')
+        script.onload = () => kakao.maps.load(this.initMap)
+        script.src = 
+        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=7aa3cf5f48a47c3a29042eee59da9f7b';
+        console.log("mounted안의 카카오맵 호출 하기 직 전!");
+        document.head.appendChild(script)
+      }
+    },
     fetchPerform(mt20id) {
       axios.get(secosi.performs.perform(mt20id))
         .then(res => {
           this.performInfo=res.data
+          this.lainfo=res.data.la
+          this.loinfo=res.data.lo
           let strs = this.performInfo.styurls
           this.styurl=strs.split(',')
           let str = this.styurl
           this.styurl=str.slice(0,-1)
-        }) 
+          let stytext = this.performInfo.sty
+          this.styt=stytext.replace('\r\n', '<br />')
+          console.log(".then안입니다"+this.lainfo)
+          this.kakaoMapTest()
+        })
     },
+    initMap() {
+      console.log("initmap입니다.",this.lainfo);
+      const mapContainer = document.getElementById('map');
+      const option = {
+        center: new kakao.maps.LatLng(this.lainfo, this.loinfo),
+        level: 6,
+      }
+      console.log("initmap2입니다.",this.lainfo);
+      const map = new kakao.maps.Map(mapContainer, option)
+      const markerPosition = new kakao.maps.LatLng(this.lainfo, this.loinfo)
+      const marker = new kakao.maps.Marker({
+         position: markerPosition
+       });
+       marker.setMap(map);
+       map.setCenter(markerPosition); 
+       map.relayout();
+    }
   },
   created() {
+    console.log("created안입니다.");
     this.fetchPerform(this.mt20id)
   },
   mounted() {
-    var container = this.$refs.kakaomap; //지도를 담을 영역의 DOM 레퍼런스
-    var options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-      level: 3 //지도의 레벨(확대, 축소 정도)
-    };
-
-    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-  }
+  },
 }
 </script>
 <style scoped>
