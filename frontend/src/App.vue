@@ -46,8 +46,10 @@ export default{
     }
   },
   created() {
-    this.fetchPerformAllRank()
-    this.fetchPerformGenreRank()
+    if (!localStorage.getItem('homes')){
+      this.fetchPerformAllRank()
+      this.fetchPerformGenreRank()
+    }
     this.fetchPerforms()
     this.fetchCurrentUser()
     this.searchArticles(this.genre, this.category)

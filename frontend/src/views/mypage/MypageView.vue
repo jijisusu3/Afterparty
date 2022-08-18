@@ -187,6 +187,9 @@ export default {
     ProfileImageComponent,
   },
   created() {
+    if(!this.isLoggedIn) {
+      this.$router.push({name:'Home'})
+    }
     this.username = this.currentUser.name
     this.aboutMe = this.currentUser.aboutMe || '-'
     this.userId = this.currentUser.userId
