@@ -21,7 +21,10 @@ export const useAccounts = defineStore({
       this.currentUser = {}
       window.location.reload()
     },
-    fetchCurrentUser() {
+
+    fetchCurrentUser(token) {
+      localStorage.setItem('token', token)
+      this.token = token
       if (this.isLoggedIn) {
         axios.get(secosi.accounts.currentUserInfo(), {
           headers: {
@@ -33,22 +36,21 @@ export const useAccounts = defineStore({
           })
           .catch(err => {
             if (err.response.status === 401) {
-              this.removeToken()
             }
           })
         }
       },
-      login(credential) {
-        axios.post(secosi.accounts.login(), credential)
-        .then(res => {
-          localStorage.setItem('token', res.data.accessToken)
-          this.token = res.data.accessToken
-          this.fetchCurrentUser()
-        })
-        .catch(err => {
-          console.error(err.response.data)
-        })
-    },
+    //   login(credential) {
+    //     axios.post(secosi.accounts.login(), credential)
+    //     .then(res => {
+    //       localStorage.setItem('token', res.data.accessToken)
+    //       this.token = res.data.accessToken
+    //       this.fetchCurrentUser()
+    //     })
+    //     .catch(err => {
+    //       console.log('aa')
+    //     })
+    // },
     signup(credential) {
       axios.post(secosi.accounts.signup(), credential)
         .then(res => {
