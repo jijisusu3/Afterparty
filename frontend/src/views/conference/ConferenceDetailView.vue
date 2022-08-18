@@ -9,7 +9,7 @@
 					<div class="chat">
 						<div class="chat-header clearfix">
 							<div class="chat-about">
-								<div class="chat-with">채팅</div>
+								<div class="chat-with">{{ conferenceTitle }}</div>
 							</div>
 						</div>
 						<div class="chat-history">
@@ -40,7 +40,6 @@
 						</div>
 					</div>
 						<div id="session-header">
-							<h1 id="session-title">{{ conferenceTitle }}</h1>
 							<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
 						</div>
 					</div>
