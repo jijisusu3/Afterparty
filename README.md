@@ -20,7 +20,7 @@
 >뮤지컬 및 공연 문화를 사랑하는 사람이라면 누구든 찾아와 비슷한 취향을 가진 사람과 함께 시시콜콜한 이야기를 떠들 수 있습니다.   
 > 온라인인만큼 공간의 제약이 있는 오프라인 모임보다 더 자유롭고 즉흥적인 형식의 모임 서비스를 제공하는 것이 목표입니다.   
 <br>
-📽️ UCC 링크 슈슉   
+📽️ UCC 
 
 * * *
 <br>
@@ -29,7 +29,7 @@
 |Name|김지수|유강현|이성훈|전지수|조다연|차송희|
 |---|:----:|:----:|:----:|:----:|:----:|:----:|
 |**Profile**|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648027?v=4"/>|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97591826?v=4"/>|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/71359353?v=4"/>|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97648037?v=4"/>|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/97671781?v=4"/>|<img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/44563011?v=4"/>|
-|**Position**|Frontend</br>Reader|Frontend</br>Team Reader</br>Infra|Backend</br>UCC|Frontend</br>Git Assignee|Backend</br>Reader</br>Doc Manager|Backend</br>Git Manager</br>Infra|
+|**Position**|Frontend<br>Reader|Frontend<br>Team Reader<br>Infra|Backend<br>UCC|Frontend<br>Git Assignee|Backend<br>Reader<br>Doc Manager|Backend<br>Git Manager<br>Infra|
 |**Git**|<a href="https://github.com/jijisusu3">@jijisusu3</a>|<a href="https://github.com/kanyu97">@kanyu97</a>|<a href="https://github.com/Lee-sung-hoon">@Lee-sung-hoon</a>|<a href="https://github.com/zyyyyyysoo">@zyyyyyysoo</a>|<a href="https://github.com/dus6982">@dus6982</a>|<a href="https://github.com/chasonghui">@chasonghui</a>|   
 * * *
 <br>
