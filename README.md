@@ -115,7 +115,6 @@
 🔧 [EC2 원격설정](https://chasonghui.notion.site/EC2-6bc439b748dd44598b9b88a2c4c1b54b)   
 💡 [수동배포 가이드](https://chasonghui.notion.site/0fff0ab7b348491c883c825a4ce9f1e4)   
 🔧 [openvidu 환경설정](https://chasonghui.notion.site/Openvidu-8814806bfa5e4c20977414d8cb13a2eb)   
-💡 [배포 구조 이해하기](https://chasonghui.notion.site/2445145deb214b6a8526d2be3e725cc8)   
 
 * * *    
 <br> 
