@@ -7,16 +7,12 @@
 
 ## 📰 Project Outline   
 
-We noticed 'Salon culture', popular in Korea in the twenties and thirties people before the Pandemic. 
-Salon is rooted in regular social gatherings for the French upper class and literati. In modern times, it has become a gathering where individuals with similar hobbies to communicate their opinions freely.  
+
 <br>
-As the number of single-person households rapidly increases, single-person households are emerging as a new consumer market player.
-Especially, we noted the rise of solo attendees at performances, and they have become the primary market consumers in the performing arts.
-We decided to build this service targeting solo attendees. 
-<br>
-'Afterparty' is started for the person even if they enjoy the performance alone, wants to communicate with the same preference.
-Everyone who loves a musical and performing can come to our website and communicate what they saw and enjoyed.
-Our goal is to give a prompt and freestyle 'Salon' for users without a limit of space like an 'Afterparty'. 
+    "Afterparty" was created for people who enjoy watching performances alone but want to discuss these performances online with other viewers. 
+    All performance lovers can come to our website and converse about what they saw and enjoyed. 
+    Our goal is to offer prompts and open dialogue about any and all performances via discussion boards and virtual conference rooms. 
+    Afterparty is an innovative and modern space that allows like-minded individuals to connect online and delve into topics of interest. 
 
 <br>
 📽️ UCC 
