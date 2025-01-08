@@ -15,7 +15,7 @@
     Afterparty is an innovative and modern space that allows like-minded individuals to connect online and delve into topics of interest. 
 
 <br>
-📽️ UCC 
+
 
 * * *
 <br>
@@ -92,13 +92,12 @@
 ## 🔗 WIKI
 📖 [Team Notion](https://www.notion.so/1077c3bc1d954b9788adb19d57a2bed1)   
 🙌 [Git Convention](https://www.notion.so/Git-Convention-cf8040187a7a4abeadc1b63ba9ac99dc) | [Jira Convention](https://www.notion.so/Jira-a44878185b8b4ebe9989eacbcdb6bd58)   
-📜 [API 명세서](https://www.notion.so/d0348f73a27f4ba3aaa8dddba6b173f7?v=2fa7c9b510014468b3a0acc7893d7bfa) | [ERD](https://www.erdcloud.com/d/NALFTQamYNgu2epWZ) | [FIGMA](https://www.figma.com/file/AHYHvryDoVUn6Mhqx3yD4P/SSAFY-7%EA%B8%B0-3%EC%A1%B0-%EA%B3%B5%ED%86%B5-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=6%3A2)      
+📜 [API Documentation](https://www.notion.so/d0348f73a27f4ba3aaa8dddba6b173f7?v=2fa7c9b510014468b3a0acc7893d7bfa) | [ERD](https://www.erdcloud.com/d/NALFTQamYNgu2epWZ) | [FIGMA](https://www.figma.com/file/AHYHvryDoVUn6Mhqx3yD4P/SSAFY-7%EA%B8%B0-3%EC%A1%B0-%EA%B3%B5%ED%86%B5-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=6%3A2)      
 
 * * *   
 <br> 
 
 ## ⚙️ Deployment
-🔧 [EC2 원격설정](https://chasonghui.notion.site/EC2-6bc439b748dd44598b9b88a2c4c1b54b)   
 💡 [Menual of deployment guide](https://chasonghui.notion.site/0fff0ab7b348491c883c825a4ce9f1e4)   
 🔧 [openvidu preferences](https://chasonghui.notion.site/Openvidu-8814806bfa5e4c20977414d8cb13a2eb)   
 💡 [Understanding deployment structure](https://chasonghui.notion.site/2445145deb214b6a8526d2be3e725cc8)   
